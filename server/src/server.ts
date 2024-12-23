@@ -1,11 +1,13 @@
-import app from "./app";
+import httpServer from "./app";
+
 import Logger from "./utils/logger";
+import { socketConnection } from "./utils/socket";
 
 const logger = new Logger("server");
 
 // Start the server
 const port = 8000;
-app.listen(port, () => {
-  // console.log(`Server started at http://localhost:${port}`);
+httpServer.listen(port, () => {
   logger.info(`Server started at http://localhost:${port}`);
+  socketConnection();
 });
