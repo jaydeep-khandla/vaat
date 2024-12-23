@@ -2,7 +2,7 @@ import * as mediasoup from "mediasoup";
 import { mediasoupConfig } from "../config";
 import { WorkerSettings } from "../types/mediasoup";
 import Logger from "../utils/logger";
-import { runMediasoupObserver } from "../lib/mediasoup";
+import { runMediasoupObserver } from "../lib/observers";
 
 const logger = new Logger("mediasoup");
 
