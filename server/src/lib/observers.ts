@@ -7,20 +7,37 @@ import {
   DtlsState,
   Producer,
   Router,
-  Transport,
   WebRtcServer,
   WebRtcTransport,
   Worker,
 } from "mediasoup/node/lib/types";
+import { mediasoupConfig } from "../config";
+import { TransportObj } from "../types/mediasoup";
 
-const logger = new Logger("observer");
+const logger = new Logger("mediasoup-observer");
+
+const webRtcServers = new Map<string, WebRtcServer>();
+const routers = new Map<string, Router>();
+const transports = new Map<string, TransportObj[]>();
+const producers = new Map<string, Producer[]>();
+const consumers = new Map<string, Consumer[]>();
+const dataProducers = new Map<string, DataProducer[]>();
+const dataConsumers = new Map<string, DataConsumer[]>();
+
+global.webRtcServers = webRtcServers;
+global.routers = routers;
+global.transports = transports;
+global.producers = producers;
+global.consumers = consumers;
+global.dataProducers = dataProducers;
+global.dataConsumers = dataConsumers;
 
 function runMediasoupObserver() {
-  mediasoup.observer.on("newworker", workerEvent); // Event function for new worker
+  mediasoup.observer.on("newworker", workerEvent); // Event function for new [worker]
 }
 
-function workerEvent(worker: Worker) {
-  (global as any).worker = worker; // TO-DO: Find a better way to do this
+async function workerEvent(worker: Worker) {
+  global.worker = worker; // TO-DO: Find a better way to do this
 
   logger.info("New worker created [pid:%d]", worker.pid);
 
@@ -32,13 +49,23 @@ function workerEvent(worker: Worker) {
     logger.error("Worker closed [pid:%d]", worker.pid);
   });
 
-  worker.observer.on("newwebrtcserver", webRtcServerEvents); // Event function for new WebRtcServer
+  worker.observer.on("newwebrtcserver", webRtcServerEvents); // Event function for new [WebRtcServer]
+
+  const webRtcServer = await worker.createWebRtcServer(
+    mediasoupConfig.webRtcServerOptions
+  );
 
   worker.observer.on("newrouter", routerEvents); // Event function for new Router
 }
 
 function webRtcServerEvents(webRtcServer: WebRtcServer) {
   logger.info("New WebRtcServer created [webRtcServerId:%s]", webRtcServer.id);
+
+  webRtcServers.set(webRtcServer.id, webRtcServer);
+
+  worker.appData.webRtcServer = webRtcServer;
+
+  // logger.info("WebRtcServer: %o", global.worker.appData.webRtcServer);
 
   webRtcServer.observer.on("close", () => {
     logger.error("WebRtcServer closed [webRtcServerId:%s]", webRtcServer.id);
@@ -48,11 +75,13 @@ function webRtcServerEvents(webRtcServer: WebRtcServer) {
 function routerEvents(router: Router) {
   logger.info("New router created [routerId:%s]", router.id);
 
+  // routers.set(router.id, router);
+
   router.observer.on("close", () => {
     logger.error("Router closed [routerId:%s]", router.id);
   });
 
-  router.observer.on("newtransport", transportEvents); // Event function for new Transport
+  router.observer.on("newtransport", transportEvents); // Event function for new [Transport]
 }
 
 function transportEvents(transport: WebRtcTransport) {
@@ -62,20 +91,17 @@ function transportEvents(transport: WebRtcTransport) {
     dtlsStateChnageEvent(state, transport)
   ); // Event function for dtls state change
 
-  transport.observer.on("newproducer", producerEvents); // Event function for new Producer
-  transport.observer.on("newconsumer", consumerEvents); // Event function for new Consumer
-  transport.observer.on("newdataproducer", dataProducerEvents); // Event function for new DataProducer
-  transport.observer.on("newdataconsumer", dataConsumerEvents); // Event function for new DataConsumer
+  transport.observer.on("newproducer", producerEvents); // Event function for new [Producer]
+  transport.observer.on("newconsumer", consumerEvents); // Event function for new [Consumer]
+  transport.observer.on("newdataproducer", dataProducerEvents); // Event function for new [DataProducer]
+  transport.observer.on("newdataconsumer", dataConsumerEvents); // Event function for new [DataConsumer]
 
   transport.observer.on("close", () => {
     logger.error("Transport closed [transportId:%s]", transport.id);
   });
 }
 
-function dtlsStateChnageEvent(
-  state: DtlsState,
-  transport: WebRtcTransport & Transport
-) {
+function dtlsStateChnageEvent(state: DtlsState, transport: WebRtcTransport) {
   logger.info("DTLS state changed [state:%s]", state);
   if (state === "failed") {
     logger.error("DTLS failed");

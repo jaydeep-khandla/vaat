@@ -1,10 +1,19 @@
+import {
+  WebRtcServer,
+  WebRtcServerOptions,
+  WebRtcTransportOptions,
+} from "mediasoup/node/lib/types";
+import { RouterSettings, WorkerSettings } from "../types/mediasoup";
+
+const worker = global.worker;
+
 export default {
   worker: {
     logLevel: "debug",
     logTags: ["info", "ice", "dtls", "rtp", "srtp", "rtcp", "message"],
     rtcMinPort: 10000,
     rtcMaxPort: 10100,
-  },
+  } as WorkerSettings,
   routerOptions: {
     mediaCodecs: [
       {
@@ -53,46 +62,35 @@ export default {
         },
       },
     ],
-  },
+  } as RouterSettings,
   webRtcServerOptions: {
-    listenIps: [
+    listenInfos: [
       {
         protocol: "udp",
         ip: process.env.MEDIASOUP_LISTEN_IP || "0.0.0.0",
         // announcedAddress : process.env.MEDIASOUP_ANNOUNCED_IP,
-        port: 44444,
+        // port: 44444,
+        portRange: {
+          min: process.env.MEDIASOUP_MIN_PORT || 40000,
+          max: process.env.MEDIASOUP_MAX_PORT || 49999,
+        },
       },
       {
         protocol: "tcp",
         ip: process.env.MEDIASOUP_LISTEN_IP || "0.0.0.0",
         // announcedAddress : process.env.MEDIASOUP_ANNOUNCED_IP,
-        port: 44444,
+        // port: 44444,
+        portRange: {
+          min: process.env.MEDIASOUP_MIN_PORT || 40000,
+          max: process.env.MEDIASOUP_MAX_PORT || 49999,
+        },
       },
     ],
-  },
+  } as WebRtcServerOptions,
   webRtcTransportOptions: {
     // listenInfos is not needed since webRtcServer is used.
     // However passing MEDIASOUP_USE_WEBRTC_SERVER=false will change it.
-    listenIps: [
-      {
-        protocol: "udp",
-        ip: process.env.MEDIASOUP_LISTEN_IP || "0.0.0.0",
-        // announcedAddress: process.env.MEDIASOUP_ANNOUNCED_IP,
-        portRange: {
-          min: process.env.MEDIASOUP_MIN_PORT || 40000,
-          max: process.env.MEDIASOUP_MAX_PORT || 49999,
-        },
-      },
-      {
-        protocol: "tcp",
-        ip: process.env.MEDIASOUP_LISTEN_IP || "0.0.0.0",
-        // announcedAddress: process.env.MEDIASOUP_ANNOUNCED_IP,
-        portRange: {
-          min: process.env.MEDIASOUP_MIN_PORT || 40000,
-          max: process.env.MEDIASOUP_MAX_PORT || 49999,
-        },
-      },
-    ],
+    // webRtcServer: worker?.appData?.webRtcServer as WebRtcServer,
     initialAvailableOutgoingBitrate: 1000000,
     minAvailableOutgoingBitrate: 600000,
     maxSctpMessageSize: 262144,

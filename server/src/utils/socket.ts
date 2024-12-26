@@ -1,15 +1,17 @@
+// import Logger from "./logger";
+import { handleSocketEvents } from "../lib/socketEvents";
 import { Socket } from "socket.io";
-import Logger from "./logger";
 
-const logger = new Logger("socket");
+// const logger = new Logger("socket");
 
 function socketConnection() {
-  const io = (global as any).io;
-  const socket = io.of("/meeting");
+  const io = global.io;
 
-  socket.on("connection", (socket: Socket) => {
-    logger.info("Socket connected");
-  });
+  const meetingNamespace = io.of("/meeting");
+
+  meetingNamespace.on("connection", (socket: Socket) =>
+    handleSocketEvents(meetingNamespace, socket)
+  );
 }
 
 export { socketConnection };

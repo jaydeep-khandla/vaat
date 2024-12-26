@@ -1,4 +1,9 @@
-import { WorkerLogLevel, WorkerLogTag } from "mediasoup/node/lib/types";
+import {
+  RtpCodecCapability,
+  WebRtcTransport,
+  WorkerLogLevel,
+  WorkerLogTag,
+} from "mediasoup/node/lib/types";
 
 interface WorkerSettings {
   logLevel: WorkerLogLevel;
@@ -10,4 +15,15 @@ interface WorkerSettings {
   rtcMaxPort: number;
 }
 
-export { WorkerSettings };
+interface RouterSettings {
+  mediaCodecs: RtpCodecCapability[];
+}
+
+interface TransportObj {
+  roomId: string;
+  socketId: string;
+  transport: WebRtcTransport;
+  isConsumer: boolean;
+}
+
+export { WorkerSettings, RouterSettings, TransportObj };

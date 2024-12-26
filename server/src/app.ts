@@ -1,3 +1,4 @@
+// import "./types/global";
 import express from "express";
 const app = express();
 
@@ -14,7 +15,7 @@ import { Server } from "socket.io";
 import { socketConfig } from "./config";
 
 const io = new Server(httpServer, { cors: socketConfig.cors });
-(global as any).io = io;
+global.io = io;
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
