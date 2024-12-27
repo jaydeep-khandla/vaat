@@ -22,7 +22,6 @@ interface RouterSettings {
 interface TransportObj {
   roomId: string;
   socketId: string;
-  transport: WebRtcTransport;
   isConsumer: boolean;
 }
 

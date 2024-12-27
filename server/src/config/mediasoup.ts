@@ -1,7 +1,8 @@
 import {
-  WebRtcServer,
+  ActiveSpeakerObserverOptions,
+  AudioLevelObserverOptions,
   WebRtcServerOptions,
-  WebRtcTransportOptions,
+  // WebRtcTransportOptions,
 } from "mediasoup/node/lib/types";
 import { RouterSettings, WorkerSettings } from "../types/mediasoup";
 
@@ -14,6 +15,30 @@ export default {
     rtcMinPort: 10000,
     rtcMaxPort: 10100,
   } as WorkerSettings,
+  webRtcServerOptions: {
+    listenInfos: [
+      {
+        protocol: "udp",
+        ip: process.env.MEDIASOUP_LISTEN_IP || "0.0.0.0",
+        // announcedAddress : process.env.MEDIASOUP_ANNOUNCED_IP,
+        // port: 44444,
+        portRange: {
+          min: process.env.MEDIASOUP_MIN_PORT || 40000,
+          max: process.env.MEDIASOUP_MAX_PORT || 49999,
+        },
+      },
+      {
+        protocol: "tcp",
+        ip: process.env.MEDIASOUP_LISTEN_IP || "0.0.0.0",
+        // announcedAddress : process.env.MEDIASOUP_ANNOUNCED_IP,
+        // port: 44444,
+        portRange: {
+          min: process.env.MEDIASOUP_MIN_PORT || 40000,
+          max: process.env.MEDIASOUP_MAX_PORT || 49999,
+        },
+      },
+    ],
+  } as WebRtcServerOptions,
   routerOptions: {
     mediaCodecs: [
       {
@@ -63,30 +88,15 @@ export default {
       },
     ],
   } as RouterSettings,
-  webRtcServerOptions: {
-    listenInfos: [
-      {
-        protocol: "udp",
-        ip: process.env.MEDIASOUP_LISTEN_IP || "0.0.0.0",
-        // announcedAddress : process.env.MEDIASOUP_ANNOUNCED_IP,
-        // port: 44444,
-        portRange: {
-          min: process.env.MEDIASOUP_MIN_PORT || 40000,
-          max: process.env.MEDIASOUP_MAX_PORT || 49999,
-        },
-      },
-      {
-        protocol: "tcp",
-        ip: process.env.MEDIASOUP_LISTEN_IP || "0.0.0.0",
-        // announcedAddress : process.env.MEDIASOUP_ANNOUNCED_IP,
-        // port: 44444,
-        portRange: {
-          min: process.env.MEDIASOUP_MIN_PORT || 40000,
-          max: process.env.MEDIASOUP_MAX_PORT || 49999,
-        },
-      },
-    ],
-  } as WebRtcServerOptions,
+  audioLevelObserverOptions: {
+    maxEntries: 15,
+    threshold: -80,
+    interval: 500,
+  } as AudioLevelObserverOptions,
+  activeSpeakerObserverOptions: {
+    threshold: -80,
+    interval: 500,
+  } as ActiveSpeakerObserverOptions,
   webRtcTransportOptions: {
     // listenInfos is not needed since webRtcServer is used.
     // However passing MEDIASOUP_USE_WEBRTC_SERVER=false will change it.
@@ -95,6 +105,6 @@ export default {
     minAvailableOutgoingBitrate: 600000,
     maxSctpMessageSize: 262144,
     // Additional options that are not part of WebRtcTransportOptions.
-    // maxIncomingBitrate: 1500000, //
+    // maxIncomingBitrate: 1500000,
   },
 };

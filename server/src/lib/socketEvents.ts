@@ -1,4 +1,9 @@
-import { Router, WebRtcTransportOptions } from "mediasoup/node/lib/types";
+import {
+  AudioLevelObserver,
+  Router,
+  WebRtcServer,
+  WebRtcTransportOptions,
+} from "mediasoup/node/lib/types";
 import Logger from "../utils/logger";
 import { Namespace, Socket } from "socket.io";
 import { mediasoupConfig } from "../config";
@@ -8,9 +13,12 @@ const logger = new Logger("socket-events");
 
 const rooms = new Map<string, Room>();
 const peers = new Map<string, Peer>();
+const meetings = new Map<string, string>();
 
+// Set global variables
 global.rooms = rooms;
 global.peers = peers;
+global.meetings = meetings;
 
 function handleSocketEvents(meetingNamespace: Namespace, socket: Socket) {
   logger.info("Socket connected [socketId:%s]", socket.id);
@@ -91,10 +99,19 @@ async function createRoom(roomId: string) {
     id: roomId,
     sockets: [],
     router: router.id,
+    webRtcServer: (worker.appData.webRtcServer as WebRtcServer).id,
+    audioLevelObserver: audioLevelObservers.get(router.id)
+      ? audioLevelObservers.get(router.id).id
+      : null,
+    activeSpeakerObserver: activeSpeakerObservers.get(router.id)
+      ? activeSpeakerObservers.get(router.id).id
+      : null,
+    // (audioLevelObserver.get(router.id) as AudioLevelObserver).id || null,
   };
 
-  routers.set(roomId, router);
+  // routers.set(roomId, router);
   rooms.set(roomId, room);
+  meetings.set(router.id, roomId);
 
   return router;
 }
@@ -111,7 +128,7 @@ async function handleWebRtcTransport(
     return;
   }
 
-  const router: Router = routers.get(peer.meetingId);
+  const router: Router = routers.get(peer.routerId);
 
   if (!router) {
     logger.error("Router not found [roomId:%s]", peer.meetingId);
@@ -121,6 +138,11 @@ async function handleWebRtcTransport(
   const webRtcTransport = await router.createWebRtcTransport({
     webRtcServer: worker.appData.webRtcServer,
     ...mediasoupConfig.webRtcTransportOptions,
+    appData: {
+      roomId: peer.meetingId,
+      socketId: socket.id,
+      isConsumer,
+    },
   } as WebRtcTransportOptions);
 
   if (isConsumer) {
@@ -128,6 +150,8 @@ async function handleWebRtcTransport(
   } else {
     peer.producers.push(webRtcTransport.id);
   }
+
+  peers.get(socket.id).transports.push(webRtcTransport.id);
 
   const params = {
     id: webRtcTransport.id,

@@ -22,6 +22,9 @@ interface Room {
   id: string;
   sockets: Socket[];
   router: string;
+  webRtcServer: string;
+  audioLevelObserver: string | null;
+  activeSpeakerObserver: string | null;
 }
 
 interface Peer {

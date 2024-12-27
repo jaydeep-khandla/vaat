@@ -1,31 +1,40 @@
 import * as mediasoup from "mediasoup";
 import Logger from "../utils/logger";
 import {
+  ActiveSpeakerObserver,
+  AudioLevelObserver,
   Consumer,
   DataConsumer,
   DataProducer,
   DtlsState,
   Producer,
   Router,
+  RtpObserver,
+  RtpObserverType,
   WebRtcServer,
   WebRtcTransport,
   Worker,
 } from "mediasoup/node/lib/types";
 import { mediasoupConfig } from "../config";
-import { TransportObj } from "../types/mediasoup";
+// import { TransportObj } from "../types/mediasoup";
 
 const logger = new Logger("mediasoup-observer");
 
 const webRtcServers = new Map<string, WebRtcServer>();
 const routers = new Map<string, Router>();
-const transports = new Map<string, TransportObj[]>();
+const audioLevelObservers = new Map<string, AudioLevelObserver>();
+const activeSpeakerObservers = new Map<string, ActiveSpeakerObserver>();
+const transports = new Map<string, WebRtcTransport>();
 const producers = new Map<string, Producer[]>();
 const consumers = new Map<string, Consumer[]>();
 const dataProducers = new Map<string, DataProducer[]>();
 const dataConsumers = new Map<string, DataConsumer[]>();
 
+// Set global variables
 global.webRtcServers = webRtcServers;
 global.routers = routers;
+global.audioLevelObservers = audioLevelObservers;
+global.activeSpeakerObservers = activeSpeakerObservers;
 global.transports = transports;
 global.producers = producers;
 global.consumers = consumers;
@@ -47,6 +56,8 @@ async function workerEvent(worker: Worker) {
 
   worker.observer.on("close", () => {
     logger.error("Worker closed [pid:%d]", worker.pid);
+
+    process.exit(1);
   });
 
   worker.observer.on("newwebrtcserver", webRtcServerEvents); // Event function for new [WebRtcServer]
@@ -65,27 +76,73 @@ function webRtcServerEvents(webRtcServer: WebRtcServer) {
 
   worker.appData.webRtcServer = webRtcServer;
 
-  // logger.info("WebRtcServer: %o", global.worker.appData.webRtcServer);
-
   webRtcServer.observer.on("close", () => {
     logger.error("WebRtcServer closed [webRtcServerId:%s]", webRtcServer.id);
+    webRtcServers.delete(webRtcServer.id);
   });
 }
 
-function routerEvents(router: Router) {
+async function routerEvents(router: Router) {
   logger.info("New router created [routerId:%s]", router.id);
 
-  // routers.set(router.id, router);
+  routers.set(router.id, router);
+
+  router.observer.on("newrtpobserver", (rtpObserver) =>
+    rtpObserverEvents(router.id, rtpObserver)
+  ); // Event function for new [RtpObserver]
+
+  // Create audioLevelObserver and activeSpeakerObserver
+  const audioLevelObserver = await router.createAudioLevelObserver(
+    mediasoupConfig.audioLevelObserverOptions
+  );
+
+  global.audioLevelObservers.set(router.id, audioLevelObserver);
+
+  const activeSpeakerObserver = await router.createActiveSpeakerObserver(
+    mediasoupConfig.activeSpeakerObserverOptions
+  );
+
+  activeSpeakerObservers.set(router.id, activeSpeakerObserver);
 
   router.observer.on("close", () => {
     logger.error("Router closed [routerId:%s]", router.id);
+
+    // Delete router from global
+    routers.delete(router.id);
+
+    // Close audioLevelObserver and activeSpeakerObserver
+    audioLevelObserver.close();
+    activeSpeakerObserver.close();
+
+    // Delete audioLevelObserver and activeSpeakerObserver from global
+    audioLevelObservers.delete(router.id);
+    activeSpeakerObservers.delete(router.id);
   });
 
   router.observer.on("newtransport", transportEvents); // Event function for new [Transport]
 }
 
+async function rtpObserverEvents(routerId: string, rtpObserver: RtpObserver) {
+  logger.info("New rtpObserver created [rtpObserverId:%s]", rtpObserver.id);
+  logger.info(rtpObserver.type);
+
+  if (rtpObserver.type === ("audioLevel" as RtpObserverType)) {
+    const roomId = meetings.get(routerId);
+
+    rooms.get(roomId).audioLevelObserver = rtpObserver.id;
+  }
+
+  if (rtpObserver.type === ("activeSpeaker" as RtpObserverType)) {
+    const roomId = meetings.get(routerId);
+
+    rooms.get(roomId).activeSpeakerObserver = rtpObserver.id;
+  }
+}
+
 function transportEvents(transport: WebRtcTransport) {
   logger.info("New transport created [transportId:%s]", transport.id);
+
+  transports.set(transport.id, transport);
 
   transport.on("dtlsstatechange", (state: DtlsState) =>
     dtlsStateChnageEvent(state, transport)
@@ -98,6 +155,7 @@ function transportEvents(transport: WebRtcTransport) {
 
   transport.observer.on("close", () => {
     logger.error("Transport closed [transportId:%s]", transport.id);
+    transports.delete(transport.id);
   });
 }
 
