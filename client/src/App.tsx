@@ -11,6 +11,7 @@ import {
   PopoverFooter,
   PopoverTitle,
 } from "@/components/ui/Popover";
+import Footer from "./components/Footer";
 
 function App() {
   const [popoverVisible, setPopoverVisible] = useState(false);
@@ -21,7 +22,7 @@ function App() {
 
   return (
     <>
-      <PopoverRoot>
+      {/* <PopoverRoot>
         <PopoverTrigger onClick={handlePopoverToggle}>
           <Button>Toggle Popover</Button>
         </PopoverTrigger>
@@ -41,7 +42,8 @@ function App() {
             </PopoverFooter>
           </PopoverContent>
         </Popover>
-      </PopoverRoot>
+      </PopoverRoot> */}
+      <Footer />
     </>
   );
 }

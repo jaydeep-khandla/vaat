@@ -3,8 +3,8 @@
   align-items: center;
   justify-content: center;
   white-space: nowrap;
-  background-color: #000000;
-  color: #ffffff;
+  /* background-color: var(--pallete-color-1);
+  color: var(--primary-font-color); */
   border-radius: 0.3rem;
   border: none;
   font-weight: 500;
@@ -14,9 +14,13 @@
   margin: 0.1rem;
 }
 
+.btn:hover {
+  transform: scale(1.05);
+}
+
 .btn:focus-visible {
   /* outline: none; */
-  outline: 1px solid #010101;
+  outline: 1px solid var(--primary-color);
   outline-offset: 1px;
 }
 
@@ -31,27 +35,28 @@
 }
 
 .default {
-  background-color: #000000;
-  color: #ffffff;
+  background-color: var(--pallete-color-1);
+  color: var(--primary-font-color);
 }
 
 .default:hover {
-  background-color: rgb(0, 0, 0, 0.8);
+  background-color: rgba(var(--pallete-color-1-rgb), 0.8);
 }
 
 .outline {
   background-color: transparent;
-  color: #000000;
-  border: 1px solid #000000;
+  color: var(--pallete-color-1);
+  border: 1px solid var(--pallete-color-1);
 }
 
 .outline:hover {
-  background-color: #e4e4e4;
+  background-color: var(--pallete-color-1);
+  color: var(--primary-font-color);
 }
 
 .primary {
-  background-color: rgb(var(--primary-color-rgb));
-  color: rgb(255, 255, 255);
+  background-color: rgb(var(--primary-color));
+  color: var(--primary-font-color);
 }
 
 .primary:hover {
@@ -59,8 +64,8 @@
 }
 
 .secondary {
-  background-color: rgb(var(--secondary-color-rgb));
-  color: rgb(0, 0, 0);
+  background-color: var(--secondary-color);
+  color: var(--primary-font-color);
 }
 
 .secondary:hover {
@@ -68,26 +73,26 @@
 }
 
 .destructive {
-  background-color: #ff0000;
-  color: #ffffff;
+  background-color: var(--destructive-color);
+  color: var(--primary-font-color);
 }
 
 .destructive:hover {
-  background-color: rgb(255, 0, 0, 0.8);
+  background-color: rgba(var(--destructive-color-rgb), 0.8);
 }
 
 .ghost {
   background-color: transparent;
-  color: #000000;
+  color: var(--primary-color);
 }
 
 .ghost:hover {
-  background-color: rgba(211, 211, 211, 0.8);
+  background-color: rgba(var(--secondary-color), 0.8);
 }
 
 .link {
   background-color: transparent;
-  color: #000000;
+  color: var(--primary-color);
   text-decoration: underline;
 }
 
@@ -98,17 +103,17 @@
 .sm {
   height: 2rem;
   padding-inline: 0.75rem;
-  font-size: 0.775rem;
+  font-size: var(--font-size-xsmall);
 }
 
 .md {
-  height: 2.25rem;
+  height: 2.5rem;
   padding-inline: 1rem;
-  font-size: 0.8rem;
+  font-size: var(font-size-button-medium);
 }
 
 .lg {
-  height: 2.5rem;
+  height: 2.75rem;
   padding-inline: 2rem;
-  font-size: 1rem;
+  font-size: var(--font-size-medium);
 }

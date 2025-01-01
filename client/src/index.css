@@ -5,10 +5,49 @@
 }
 
 body {
-  min-height: 100vh;
-  min-width: 100vw;
+  font-family: var(--font-family-primary);
 }
 
-.root {
+#root {
+  min-width: 100vw;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+:root {
+  --primary-font-color: #ffffff;
+  --secondary-font-color: #9ca3af;
+  --destructive-color: #ff0000;
+  --warning-color: #ffcc00;
+  --success-color: #00ff00;
+  --primary-color: #0f1826;
+  --secondary-color: #1d2936; /* #1f2937; */
+  --pallete-color-1: #0060ac;
+  --primary-font-color-rgb: 255, 255, 255;
+  --secondary-font-color-rgb: 156, 163, 175;
+  --destructive-color-rgb: 255, 0, 0;
+  --warning-color-rgb: 255, 204, 0;
+  --success-color-rgb: 0, 255, 0;
+  --primary-color-rgb: 15, 24, 38;
+  --secondary-color-rgb: 29, 41, 54; /* 31, 41, 55; */
+  --pallete-color-1-rgb: 0, 96, 172;
+  --font-size-huge: 3rem;
+  --font-size-large: 1.875rem;
+  --font-size-medium: 1.25rem;
+  --font-size-small: 1rem;
+  --font-size-xsmall: 0.8rem;
+  --font-size-button-medium: 1.125rem;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 600;
+  --font-weight-bold: 700;
+  --line-height-huge: 3.75rem;
+  --line-height-large: 2.25rem;
+  --line-height-medium: 1.75rem;
+  --line-height-small: 1.5rem;
+  /* --line-height-xsmall: 0.96rem; */
+  --font-family-primary: "Roboto", sans-serif;
+  --font-family-secondary: "Open Sans", sans-serif;
+  --border-radius: 0.5rem;
 }
