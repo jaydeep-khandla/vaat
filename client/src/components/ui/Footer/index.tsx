@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Footer.module.css";
-import { FacebookIcon, LinkedInIcon, TwitterIcon } from "../icons";
+import { FacebookIcon, LinkedInIcon, TwitterIcon } from "../../icons";
 
 export default function Footer() {
   return (

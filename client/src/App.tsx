@@ -11,7 +11,8 @@ import {
   PopoverFooter,
   PopoverTitle,
 } from "@/components/ui/Popover";
-import Footer from "./components/Footer";
+import Footer from "./components/ui/Footer";
+import Navbar from "./components/ui/Navbar";
 
 function App() {
   const [popoverVisible, setPopoverVisible] = useState(false);
@@ -43,6 +44,7 @@ function App() {
           </PopoverContent>
         </Popover>
       </PopoverRoot> */}
+      <Navbar />
       <Footer />
     </>
   );
