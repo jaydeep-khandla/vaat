@@ -55,6 +55,7 @@
   font-size: var(--font-size-medium);
   font-weight: var(--font-weight-bold);
   color: var(--primary-font-color);
+  animation: fadeIn 1.5s ease-in-out;
 }
 
 .navLink {
@@ -64,11 +65,24 @@
   line-height: var(--line-height-small);
   color: var(--secondary-font-color);
   transition: transform 0.3s ease-in-out;
+  animation: slideDown 1.8s ease-in-out;
 }
 
 .navLink:hover {
   /* color: var(--pallete-color-1); */
   transform: scale(1.05);
+}
+
+.navLink:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.navLink:nth-child(2) {
+  animation-delay: 0.2s; /* Delay second link by 0.3s */
+}
+
+.navLink:nth-child(3) {
+  animation-delay: 0.4s; /* Delay third link by 0.6s */
 }
 
 .navbarAuthButtons {
@@ -79,8 +93,29 @@
   gap: 0.625rem;
   flex-wrap: wrap;
   align-content: center;
+  animation: fadeIn 1.5s ease-in-out;
 }
 
 .btnLogin {
   color: var(--primary-font-color) !important;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-1.25rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -144,13 +144,13 @@
 }
 
 /* Animations */
-.fade-in {
+/* .fade-in {
   animation: fadeIn 1.2s ease-in-out forwards;
 }
 
 .slide-up {
   animation: slideUp 1s ease-in-out forwards;
-}
+} */
 
 /* Keyframes for Animations */
 @keyframes fadeIn {

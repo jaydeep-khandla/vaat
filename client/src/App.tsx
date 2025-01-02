@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/Popover";
 import Footer from "./components/ui/Footer";
 import Navbar from "./components/ui/Navbar";
+import LandingPage from "./views/LandingPage";
 
 function App() {
   const [popoverVisible, setPopoverVisible] = useState(false);
@@ -44,8 +45,7 @@ function App() {
           </PopoverContent>
         </Popover>
       </PopoverRoot> */}
-      <Navbar />
-      <Footer />
+      <LandingPage />
     </>
   );
 }
