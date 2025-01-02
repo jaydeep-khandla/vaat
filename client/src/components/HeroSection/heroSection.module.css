@@ -1,0 +1,108 @@
+.heroSection {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
+  gap: 0rem 0.625rem;
+  flex-grow: 1;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100vh;
+  padding: 5rem 0rem;
+  background-color: var(--primary-color);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 0em 0.625rem;
+  width: 100%;
+  height: auto;
+  padding: 0rem 1.5rem;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: flex-start;
+  gap: 0.625rem;
+  width: 100%;
+  height: fit-content;
+}
+
+.content > * {
+  flex: 1;
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  word-wrap: break-word;
+  gap: 0.625rem 0rem;
+}
+
+.textContent .heading {
+  font-size: var(--font-size-huge);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-huge);
+  color: var(--primary-font-color);
+  word-wrap: break-word;
+  word-break: break-all;
+  transition: all 1s ease-in-out;
+}
+
+.textContent .subheading {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-light);
+  line-height: var(--line-height-medium);
+  color: var(--secondary-font-color);
+  transition: all 1s ease-in-out;
+}
+
+.textContent .buttonGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: end;
+  height: 100%;
+  padding: 1rem 0rem;
+}
+
+.imageContainer img {
+  object-fit: cover;
+  transform-origin: 80% 50%;
+  transform: perspective(62.5rem) rotateY(-15deg);
+  width: 100%;
+  max-width: 35rem;
+  height: auto;
+  transition: transform 0.5s ease-in-out;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+}
+
+.imageContainer img:hover {
+  transform: perspective(62.5rem) rotateY(0deg);
+}
+
+@media screen and (max-width: 768px) {
+  .primaryButton,
+  .secondaryButton {
+    height: 2.25rem;
+    padding-inline: 1rem;
+    font-size: var(--font-size-xsmall);
+  }
+
+  .imageContainer {
+    display: none;
+  }
+}

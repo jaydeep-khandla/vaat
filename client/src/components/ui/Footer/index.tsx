@@ -21,7 +21,6 @@ export default function Footer() {
               <li className={styles.link}>{"About"}</li>
               <li className={styles.link}>{"Careers"}</li>
               <li className={styles.link}>{"Contact"}</li>{" "}
-              {/* className={styles.link} */}
             </ul>
           </div>
           <div className={styles.linksContainer}>

@@ -114,5 +114,5 @@
 .lg {
   height: 2.75rem;
   padding-inline: 2rem;
-  font-size: var(--font-size-medium);
+  font-size: var(--font-size-button-medium);
 }
