@@ -27,7 +27,7 @@ body {
   --warning-color: #ffcc00;
   --success-color: #00ff00;
   --primary-color: #0f1826;
-  --secondary-color: #1d2936; /* #1f2937; */
+  --secondary-color: #1f2937; /* #1d2936; */
   --pallete-color-1: #0060ac;
   --primary-font-color-rgb: 255, 255, 255;
   --secondary-font-color-rgb: 156, 163, 175;
@@ -35,7 +35,7 @@ body {
   --warning-color-rgb: 255, 204, 0;
   --success-color-rgb: 0, 255, 0;
   --primary-color-rgb: 15, 24, 38;
-  --secondary-color-rgb: 29, 41, 54; /* 31, 41, 55; */
+  --secondary-color-rgb: 31, 41, 55; /* 29, 41, 54; */
   --pallete-color-1-rgb: 0, 96, 172;
   --font-size-huge: 3rem;
   --font-size-large: 1.875rem;
@@ -55,6 +55,18 @@ body {
   --font-family-primary: "Roboto", sans-serif;
   --font-family-secondary: "Open Sans", sans-serif;
   --border-radius: 0.5rem;
+  --animatin-fadeIn: fadeIn ease-in-out;
+  --animation-slideDown: slideDown ease-in-out;
+  --animation-slideUp: slideUp ease-in-out;
+  --animation-slideFromLeft: slideFromLeft ease-in-out;
+  --animation-slideFromRight: slideFromRight ease-in-out;
+  --animation-scaleUp: scaleUp ease-in-out;
+  --animation-bounceIn: bounceIn ease-in-out;
+  --animation-rotateIn: rotateIn ease-in-out;
+  --animation-flipIn: flipIn ease-in-out;
+  --animation-shake: shake ease-in-out;
+  --animation-pulse: pulse ease-in-out;
+  --animation-wiggle: wiggle ease-in-out;
 }
 
 /* Animations */
@@ -194,13 +206,13 @@ body {
     transform: rotate(0deg);
   }
   25% {
-    transform: rotate(5deg);
+    transform: rotate(10deg);
   }
   50% {
-    transform: rotate(-5deg);
+    transform: rotate(-10deg);
   }
   75% {
-    transform: rotate(5deg);
+    transform: rotate(10deg);
   }
   100% {
     transform: rotate(0deg);

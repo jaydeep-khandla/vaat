@@ -56,7 +56,7 @@
   font-size: var(--font-size-medium);
   font-weight: var(--font-weight-bold);
   color: var(--primary-font-color);
-  animation: fadeIn 1.5s ease-in-out;
+  animation: varr(--animation-fadeIn) 1.5s;
 }
 
 .navLink {
@@ -66,7 +66,7 @@
   line-height: var(--line-height-small);
   color: var(--secondary-font-color);
   transition: transform 0.3s ease-in-out;
-  animation: slideDown 1.8s ease-in-out;
+  animation: var(--animation-slideDown) 1.8s;
 }
 
 .navLink:hover {
@@ -94,14 +94,14 @@
   gap: 0.625rem;
   flex-wrap: wrap;
   align-content: center;
-  animation: fadeIn 1.5s ease-in-out;
+  animation: varr(--animation-fadeIn) 1.5s;
 }
 
 .btnLogin {
   color: var(--primary-font-color) !important;
 }
 
-@keyframes fadeIn {
+/* @keyframes fadeIn {
   0% {
     opacity: 0;
   }
@@ -119,4 +119,4 @@
     opacity: 1;
     transform: translateY(0);
   }
-}
+} */
