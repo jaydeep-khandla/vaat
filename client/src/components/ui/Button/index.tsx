@@ -15,6 +15,7 @@ const buttonVarients = cva(styles.btn, {
       link: styles.link,
     },
     size: {
+      icon: styles.icon,
       sm: styles.sm,
       md: styles.md,
       lg: styles.lg,
@@ -35,7 +36,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     | "destructive"
     | "ghost"
     | "link";
-  size?: "sm" | "md" | "lg";
+  size?: "icon" | "sm" | "md" | "lg";
 };
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(

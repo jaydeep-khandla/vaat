@@ -213,7 +213,7 @@ export function Popover({
 
 interface PopoverTriggerProps {
   children: ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   className?: string;
 }
 
@@ -223,6 +223,10 @@ export function PopoverTrigger({
   className,
 }: PopoverTriggerProps) {
   const triggerRef = React.useContext(TriggerContext);
+
+  // const handleClick = () => {
+  //   if (onClick) onClick(); // Call passed onClick handler
+  // };
   return (
     <div
       ref={triggerRef}

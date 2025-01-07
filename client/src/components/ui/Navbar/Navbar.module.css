@@ -56,7 +56,7 @@
   font-size: var(--font-size-medium);
   font-weight: var(--font-weight-bold);
   color: var(--primary-font-color);
-  animation: varr(--animation-fadeIn) 1.5s;
+  animation: var(--animation-fadeIn) 1.5s;
 }
 
 .navLink {
@@ -94,11 +94,62 @@
   gap: 0.625rem;
   flex-wrap: wrap;
   align-content: center;
-  animation: varr(--animation-fadeIn) 1.5s;
+  animation: var(--animation-fadeIn) 1.5s;
 }
 
 .btnLogin {
   color: var(--primary-font-color) !important;
+}
+
+/* Mobile view css */
+.mobileMenuButton {
+  z-index: 101;
+  display: none;
+}
+
+.mobileMenuPopover {
+  display: none;
+  border-radius: 0.625rem;
+  border: 1px solid var(--secondary-color) !important;
+  background-color: var(--primary-color) !important;
+  color: var(--primary-font-color);
+}
+
+.mobileMenuContent {
+  z-index: 102;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  min-width: 200px;
+}
+
+.mobileNavLink {
+  padding: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.mobileMenuIcon {
+  color: var(--primary-font-color);
+}
+/* 
+.mobileBtnLogin {
+  color: var(--primary-font-color) !important;
+} */
+
+@media (max-width: 568px) {
+  .navbarLinkGroup,
+  .desktopAuth,
+  .navbarAuthButtons .btnLogin,
+  .navbarAuthButtons .btnSignup {
+    display: none;
+  }
+
+  .mobileMenuPopover,
+  .mobileMenuButton {
+    display: block;
+  }
 }
 
 /* @keyframes fadeIn {

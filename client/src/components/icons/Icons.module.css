@@ -58,7 +58,7 @@
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
-  /* transition: transform 0.3s ease-in-out; */
+  /* transition: all 0.3s ease-in-out; */
 }
 
 /* .videoIcon:hover {
@@ -73,7 +73,7 @@
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
-  transition: transform 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 /* --------------------------------------------------------- */
@@ -84,7 +84,18 @@
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
-  transition: transform 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+/* --------------------------------------------------------- */
+
+.menuIcon {
+  fill: none;
+  stroke: #000;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: all 0.3s ease-in-out;
 }
 
 /* --------------------------------------------------------- */
@@ -95,5 +106,16 @@
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
-  transition: transform 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+/* --------------------------------------------------------- */
+
+.minusIcon {
+  fill: none;
+  stroke: #000; /* Default color for the stroke */
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: all 0.3s ease-in-out;
 }
