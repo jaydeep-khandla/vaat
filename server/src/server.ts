@@ -7,7 +7,7 @@ const logger = new Logger("server");
 
 // Start the server
 const port = 8000;
-httpServer.listen(port, () => {
+httpServer.listen(port, function serverListening() {
   logger.info(`Server started at http://localhost:${port}`);
   socketConnection();
 });

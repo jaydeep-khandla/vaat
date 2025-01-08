@@ -37,7 +37,7 @@ function handleSocketEvents(meetingNamespace: Namespace, socket: Socket) {
       handleWebRtcTransport(socket, isConsumer, callback)
   );
 
-  socket.on("disconnect", () => {
+  socket.on("disconnect", function onSocketDisconnect() {
     logger.info("Socket disconnected [socketId:%s]", socket.id);
   });
 }

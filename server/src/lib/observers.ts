@@ -50,11 +50,11 @@ async function workerEvent(worker: Worker) {
 
   logger.info("New worker created [pid:%d]", worker.pid);
 
-  worker.on("died", () => {
+  worker.on("died", function onWorkerDied() {
     logger.error("Worker died [pid:%d]", worker.pid);
   });
 
-  worker.observer.on("close", () => {
+  worker.observer.on("close", function onWorkerClose() {
     logger.error("Worker closed [pid:%d]", worker.pid);
 
     process.exit(1);
@@ -76,7 +76,7 @@ function webRtcServerEvents(webRtcServer: WebRtcServer) {
 
   worker.appData.webRtcServer = webRtcServer;
 
-  webRtcServer.observer.on("close", () => {
+  webRtcServer.observer.on("close", function onWebRtcServerClose() {
     logger.error("WebRtcServer closed [webRtcServerId:%s]", webRtcServer.id);
     webRtcServers.delete(webRtcServer.id);
   });
@@ -104,7 +104,7 @@ async function routerEvents(router: Router) {
 
   activeSpeakerObservers.set(router.id, activeSpeakerObserver);
 
-  router.observer.on("close", () => {
+  router.observer.on("close", function onRouterClose() {
     logger.error("Router closed [routerId:%s]", router.id);
 
     // Delete router from global
@@ -153,7 +153,7 @@ function transportEvents(transport: WebRtcTransport) {
   transport.observer.on("newdataproducer", dataProducerEvents); // Event function for new [DataProducer]
   transport.observer.on("newdataconsumer", dataConsumerEvents); // Event function for new [DataConsumer]
 
-  transport.observer.on("close", () => {
+  transport.observer.on("close", function onTransportClose() {
     logger.error("Transport closed [transportId:%s]", transport.id);
     transports.delete(transport.id);
   });
@@ -173,7 +173,7 @@ function dtlsStateChnageEvent(state: DtlsState, transport: WebRtcTransport) {
 function producerEvents(producer: Producer) {
   logger.info("New producer created [producerId:%s]", producer.id);
 
-  producer.observer.on("close", () => {
+  producer.observer.on("close", function onProducerClose() {
     logger.error("Producer closed [producerId:%s]", producer.id);
   });
 }
@@ -181,7 +181,7 @@ function producerEvents(producer: Producer) {
 function consumerEvents(consumer: Consumer) {
   logger.info("New consumer created [consumerId:%s]", consumer.id);
 
-  consumer.observer.on("close", () => {
+  consumer.observer.on("close", function onConsumerClose() {
     logger.error("Consumer closed [consumerId:%s]", consumer.id);
   });
 }
@@ -189,7 +189,7 @@ function consumerEvents(consumer: Consumer) {
 function dataProducerEvents(dataProducer: DataProducer) {
   logger.info("New dataProducer created [dataProducerId:%s]", dataProducer.id);
 
-  dataProducer.observer.on("close", () => {
+  dataProducer.observer.on("close", function onDataProucerClose() {
     logger.error("DataProducer closed [dataProducerId:%s]", dataProducer.id);
   });
 }
@@ -197,7 +197,7 @@ function dataProducerEvents(dataProducer: DataProducer) {
 function dataConsumerEvents(dataConsumer: DataConsumer) {
   logger.info("New dataConsumer created [dataConsumerId:%s]", dataConsumer.id);
 
-  dataConsumer.observer.on("close", () => {
+  dataConsumer.observer.on("close", function onDataConsumerClose() {
     logger.error("DataConsumer closed [dataConsumerId:%s]", dataConsumer.id);
   });
 }
