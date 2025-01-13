@@ -1,5 +1,6 @@
 import { TwitterIcon, LinkedInIcon, FacebookIcon } from "./SocialIcons";
 import { VideoIcon } from "./VideoIcons";
+import { MicIcon } from "./MicIcon";
 import { MonitorIcon } from "./ScreenIcons";
 import {
   PencilIcon,
@@ -18,4 +19,5 @@ export {
   MessagesSquareIcon,
   MenuIcon,
   MinusIcon,
+  MicIcon,
 };

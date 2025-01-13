@@ -119,3 +119,29 @@
   stroke-linejoin: round;
   transition: all 0.3s ease-in-out;
 }
+
+/* --------------------------------------------------------- */
+
+.micIcon {
+  width: 24px;
+  height: 24px;
+  color: currentColor;
+  transition: color 0.3s ease-in-out;
+}
+
+.micIcon:hover {
+  color: #007bff; /* Change this color to whatever you want for the hover effect */
+}
+
+.micIcon path,
+.micIcon line {
+  transition: stroke 0.3s ease-in-out;
+}
+
+.micIcon path:hover {
+  stroke: #007bff; /* Hover color for the path */
+}
+
+.micIcon line:hover {
+  stroke: #007bff; /* Hover color for the line */
+}
