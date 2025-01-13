@@ -18,14 +18,14 @@ interface TransportAckCallback {
   }): void;
 }
 
-interface Room {
-  id: string;
-  sockets: Socket[];
-  router: string;
-  webRtcServer: string;
-  audioLevelObserver: string | null;
-  activeSpeakerObserver: string | null;
-}
+// interface Room {
+//   id: string;
+//   sockets: Socket[];
+//   router: string;
+//   webRtcServer: string;
+//   audioLevelObserver: string | null;
+//   activeSpeakerObserver: string | null;
+// }
 
 interface Peer {
   id: string;
@@ -37,4 +37,4 @@ interface Peer {
   consumers: string[];
 }
 
-export { JoinRoomAckCallback, TransportAckCallback, Room, Peer };
+export { JoinRoomAckCallback, TransportAckCallback, Peer };

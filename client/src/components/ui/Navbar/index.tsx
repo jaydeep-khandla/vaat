@@ -10,7 +10,7 @@ import {
 import { MenuIcon, MinusIcon } from "@/components/icons";
 
 export default function Navbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // const handleMobileMenuToggle = React.useCallback(() => {
   //   setMobileMenuOpen((prev) => !prev);

@@ -91,19 +91,6 @@ async function routerEvents(router: Router) {
     rtpObserverEvents(router.id, rtpObserver)
   ); // Event function for new [RtpObserver]
 
-  // Create audioLevelObserver and activeSpeakerObserver
-  const audioLevelObserver = await router.createAudioLevelObserver(
-    mediasoupConfig.audioLevelObserverOptions
-  );
-
-  global.audioLevelObservers.set(router.id, audioLevelObserver);
-
-  const activeSpeakerObserver = await router.createActiveSpeakerObserver(
-    mediasoupConfig.activeSpeakerObserverOptions
-  );
-
-  activeSpeakerObservers.set(router.id, activeSpeakerObserver);
-
   router.observer.on("close", function onRouterClose() {
     logger.error("Router closed [routerId:%s]", router.id);
 
@@ -111,32 +98,43 @@ async function routerEvents(router: Router) {
     routers.delete(router.id);
 
     // Close audioLevelObserver and activeSpeakerObserver
-    audioLevelObserver.close();
-    activeSpeakerObserver.close();
-
-    // Delete audioLevelObserver and activeSpeakerObserver from global
-    audioLevelObservers.delete(router.id);
-    activeSpeakerObservers.delete(router.id);
+    global.audioLevelObservers.get(router.id).close();
+    global.activeSpeakerObservers.get(router.id).close();
   });
 
   router.observer.on("newtransport", transportEvents); // Event function for new [Transport]
 }
 
 async function rtpObserverEvents(routerId: string, rtpObserver: RtpObserver) {
-  logger.info("New rtpObserver created [rtpObserverId:%s]", rtpObserver.id);
+  logger.info(
+    "New %sObserver created [rtpObserverId:%s]",
+    rtpObserver.type,
+    rtpObserver.id
+  );
   logger.info(rtpObserver.type);
 
   if (rtpObserver.type === ("audioLevel" as RtpObserverType)) {
-    const roomId = meetings.get(routerId);
-
-    rooms.get(roomId).audioLevelObserver = rtpObserver.id;
+    global.audioLevelObservers.set(routerId, rtpObserver as AudioLevelObserver);
   }
 
   if (rtpObserver.type === ("activeSpeaker" as RtpObserverType)) {
-    const roomId = meetings.get(routerId);
-
-    rooms.get(roomId).activeSpeakerObserver = rtpObserver.id;
+    global.activeSpeakerObservers.set(
+      routerId,
+      rtpObserver as ActiveSpeakerObserver
+    );
   }
+
+  rtpObserver.observer.on("close", function onRtpObserverClose() {
+    logger.error("RtpObserver closed [rtpObserverId:%s]", rtpObserver.id);
+
+    if (rtpObserver.type === ("audioLevel" as RtpObserverType)) {
+      global.audioLevelObservers.delete(routerId);
+    }
+
+    if (rtpObserver.type === ("activeSpeaker" as RtpObserverType)) {
+      global.activeSpeakerObservers.delete(routerId);
+    }
+  });
 }
 
 function transportEvents(transport: WebRtcTransport) {

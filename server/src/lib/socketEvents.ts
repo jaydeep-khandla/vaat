@@ -7,16 +7,16 @@ import {
 import Logger from "../utils/logger";
 import { Namespace, Socket } from "socket.io";
 import { mediasoupConfig } from "../config";
-import { JoinRoomAckCallback, Peer, Room, TransportAckCallback } from "socket";
+import { JoinRoomAckCallback, Peer, TransportAckCallback } from "socket";
+import Room from "./room";
+import socket from "../config/socket";
 
 const logger = new Logger("socket-events");
 
-const rooms = new Map<string, Room>();
 const peers = new Map<string, Peer>();
 const meetings = new Map<string, string>();
 
 // Set global variables
-global.rooms = rooms;
 global.peers = peers;
 global.meetings = meetings;
 
@@ -27,7 +27,17 @@ function handleSocketEvents(meetingNamespace: Namespace, socket: Socket) {
 
   // Register the join-room event listener
   socket.on("join-room", (meetingId: string, callback: JoinRoomAckCallback) =>
-    handleJoinRoom(socket, meetingId, callback)
+    handleJoinRoom(meetingNamespace, socket, meetingId, callback)
+  );
+
+  // Register the accepted-join-permission event listener
+  socket.on("accepted-join-permission", (meetingId: string) =>
+    handleAcceptedJoinPermission(socket, meetingId)
+  );
+
+  // Register the rejected-join-permission event listener
+  socket.on("rejected-join-permission", () =>
+    handleRejectedJoinPermission(socket, meetingNamespace)
   );
 
   // Register the create-webRtcTransport event listener
@@ -43,44 +53,36 @@ function handleSocketEvents(meetingNamespace: Namespace, socket: Socket) {
 }
 
 async function handleJoinRoom(
+  meetingNamespace: Namespace,
   socket: Socket,
   meetingId: string,
   callback: JoinRoomAckCallback
 ): Promise<void> {
   logger.info("Joining room [roomId:%s]", meetingId);
 
-  const router: Router =
-    routers.get(meetingId) && rooms.get(meetingId)
-      ? routers.get(meetingId)
-      : await createRoom(meetingId);
+  const existingRoom = rooms.get(meetingId);
 
-  if (rooms.get(meetingId)) {
-    const userExists: boolean = rooms
-      .get(meetingId)
-      .sockets.some((existingUser: Socket) => existingUser.id === socket.id);
+  if (!existingRoom) {
+    logger.info("Room not found [roomId:%s]", meetingId);
+    const room = await Room.create(meetingId, socket);
+
+    rooms.set(meetingId, room);
+  }
+
+  const room = rooms.get(meetingId);
+
+  if (room) {
+    const userExists = room.peers.get(socket.id);
 
     if (!userExists) {
       // Add the user socket to the sockets array
-      socket.join(meetingId);
-      rooms.get(meetingId).sockets.push(socket);
-      peers.set(socket.id, {
-        id: socket.id,
-        socketId: socket.id,
-        meetingId,
-        routerId: router.id,
-        transports: [],
-        producers: [],
-        consumers: [],
-      });
-
-      // Notify other users that a new user has connected
-      socket
-        .to(meetingId)
-        .emit("user-connected", { socketId: socket.id, meetingId });
+      meetingNamespace
+        .to(room.host.id)
+        .emit("request-join-permission", { socketId: socket.id, meetingId });
     }
   }
 
-  const rtpCapabilities: any = router.rtpCapabilities;
+  const rtpCapabilities: any = room.mediasoupRouter.rtpCapabilities;
 
   // logger.info("RTP Capabilities: %o", rtpCapabilities);
 
@@ -90,30 +92,30 @@ async function handleJoinRoom(
   callback(rtpCapabilities);
 }
 
-async function createRoom(roomId: string) {
-  const router = await worker.createRouter({
-    mediaCodecs: mediasoupConfig.routerOptions.mediaCodecs,
+function handleAcceptedJoinPermission(socket: Socket, meetingId: string) {
+  const room = rooms.get(meetingId);
+
+  socket.join(meetingId);
+  room.peers.set(socket.id, socket);
+  peers.set(socket.id, {
+    id: socket.id,
+    socketId: socket.id,
+    meetingId,
+    routerId: room.mediasoupRouter.id,
+    transports: [],
+    producers: [],
+    consumers: [],
   });
 
-  const room: Room = {
-    id: roomId,
-    sockets: [],
-    router: router.id,
-    webRtcServer: (worker.appData.webRtcServer as WebRtcServer).id,
-    audioLevelObserver: audioLevelObservers.get(router.id)
-      ? audioLevelObservers.get(router.id).id
-      : null,
-    activeSpeakerObserver: activeSpeakerObservers.get(router.id)
-      ? activeSpeakerObservers.get(router.id).id
-      : null,
-    // (audioLevelObserver.get(router.id) as AudioLevelObserver).id || null,
-  };
+  // Notify other users that a new user has connected
+  socket.to(meetingId).emit("user-joined", { socketId: socket.id, meetingId });
+}
 
-  // routers.set(roomId, router);
-  rooms.set(roomId, room);
-  meetings.set(router.id, roomId);
-
-  return router;
+function handleRejectedJoinPermission(
+  socket: Socket,
+  meetingNamespace: Namespace
+) {
+  meetingNamespace.to(socket.id).emit("user-permission-rejected");
 }
 
 async function handleWebRtcTransport(

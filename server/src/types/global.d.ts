@@ -12,7 +12,8 @@ import {
   // WebRtcTransport,
   Worker,
 } from "mediasoup/node/lib/types";
-import { Peer, Room } from "socket";
+import { Peer } from "socket";
+import Room from "../lib/room";
 import { TransportObj } from "../types/mediasoup";
 
 declare global {
