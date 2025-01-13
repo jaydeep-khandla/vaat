@@ -14,6 +14,8 @@ import {
 import Footer from "./components/ui/Footer";
 import Navbar from "./components/ui/Navbar";
 import LandingPage from "./views/LandingPage";
+import { Route, Routes } from "react-router";
+import JoinPage from "./views/JoinPage";
 
 function App() {
   const [popoverVisible, setPopoverVisible] = useState(false);
@@ -23,30 +25,10 @@ function App() {
   };
 
   return (
-    <>
-      {/* <PopoverRoot>
-        <PopoverTrigger onClick={handlePopoverToggle}>
-          <Button>Toggle Popover</Button>
-        </PopoverTrigger>
-        <Popover
-          visible={popoverVisible}
-          onClose={() => setPopoverVisible(false)}
-          align="top"
-          offset={100}
-        >
-          <PopoverContent>
-            <PopoverHeader>
-              <PopoverTitle>Popover Header</PopoverTitle>
-            </PopoverHeader>
-            <p>This is a simple popover content.</p>
-            <PopoverFooter>
-              <Button onClick={() => setPopoverVisible(false)}>Close</Button>
-            </PopoverFooter>
-          </PopoverContent>
-        </Popover>
-      </PopoverRoot> */}
-      <LandingPage />
-    </>
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/join" element={<JoinPage />} />
+    </Routes>
   );
 }
 
