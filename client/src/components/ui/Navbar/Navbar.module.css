@@ -109,6 +109,7 @@
 
 .mobileMenuPopover {
   display: none;
+  margin-top: 0.8rem;
   border-radius: 0.625rem;
   border: 1px solid var(--secondary-color) !important;
   background-color: var(--primary-color) !important;

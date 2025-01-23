@@ -8,19 +8,27 @@
   box-sizing: border-box;
 }
 
+html,
+body,
+#root {
+  overflow: hidden;
+}
+
 body {
   font-family: var(--font-family-primary);
 }
 
 #root {
   height: 100%;
-  min-width: 100%;
+  width: 100%;
+  min-width: 100vw;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
 :root {
+  /* Colors */
   --primary-font-color: #ffffff;
   --secondary-font-color: #9ca3af;
   --destructive-color: #ff0000;
@@ -29,6 +37,8 @@ body {
   --primary-color: #0f1826;
   --secondary-color: #1f2937; /* #1d2936; */
   --pallete-color-1: #0060ac;
+
+  /* RGB Values */
   --primary-font-color-rgb: 255, 255, 255;
   --secondary-font-color-rgb: 156, 163, 175;
   --destructive-color-rgb: 255, 0, 0;
@@ -37,24 +47,32 @@ body {
   --primary-color-rgb: 15, 24, 38;
   --secondary-color-rgb: 31, 41, 55; /* 29, 41, 54; */
   --pallete-color-1-rgb: 0, 96, 172;
+
+  /* Font Sizes */
   --font-size-huge: 3rem;
   --font-size-large: 1.875rem;
   --font-size-medium: 1.25rem;
   --font-size-small: 1rem;
   --font-size-xsmall: 0.8rem;
   --font-size-button-medium: 1.125rem;
+
+  /* Font Weights */
   --font-weight-light: 300;
   --font-weight-normal: 400;
   --font-weight-medium: 600;
   --font-weight-bold: 700;
+
+  /* Line Heights */
   --line-height-huge: 3.75rem;
   --line-height-large: 2.25rem;
   --line-height-medium: 1.75rem;
   --line-height-small: 1.5rem;
   /* --line-height-xsmall: 0.96rem; */
-  --font-family-primary: "Roboto", sans-serif;
-  --font-family-secondary: "Open Sans", sans-serif;
+  --font-family-primary: 'Roboto', sans-serif;
+  --font-family-secondary: 'Open Sans', sans-serif;
   --border-radius: 0.5rem;
+
+  /* Animations */
   --animatin-fadeIn: fadeIn ease-in-out;
   --animation-slideDown: slideDown ease-in-out;
   --animation-slideUp: slideUp ease-in-out;

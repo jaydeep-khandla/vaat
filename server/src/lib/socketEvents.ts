@@ -43,25 +43,19 @@ class SocketEvents {
     logger.info('Socket connected [socketId:%s]', this.socket.id);
 
     // Register event listeners
+    this.socket.on('join-room', this.handleJoinRoom);
+
     this.socket.on(
-      'join-room',
-      (meetingId: string, callback: JoinRoomAckCallback) =>
-        this.handleJoinRoom(meetingId, callback)
-    );
-
-    this.socket.on('accepted-join-permission', (meetingId: string) =>
-      this.handleAcceptedJoinPermission(meetingId)
-    );
-
-    this.socket.on('rejected-join-permission', () =>
-      this.handleRejectedJoinPermission()
+      'accepted-join-permission',
+      this.handleAcceptedJoinPermission
     );
 
     this.socket.on(
-      'create-webRtcTransport',
-      (isConsumer: boolean, callback: TransportAckCallback) =>
-        this.handleWebRtcTransport(isConsumer, callback)
+      'rejected-join-permission',
+      this.handleRejectedJoinPermission
     );
+
+    this.socket.on('create-webRtcTransport', this.handleWebRtcTransport);
 
     this.socket.on('disconnect', () => {
       logger.info('Socket disconnected [socketId:%s]', this.socket.id);

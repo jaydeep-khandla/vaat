@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import styles from "./Navbar.module.css";
-import Button from "../Button";
+import React, { useState } from 'react';
+import styles from './Navbar.module.css';
+import Button from '../Button';
 import {
   PopoverRoot,
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "../Popover";
-import { MenuIcon, MinusIcon } from "@/components/icons";
+} from '../Popover';
+import { MenuIcon, MinusIcon } from '@/components/icons';
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -25,27 +25,27 @@ export default function Navbar() {
       <div className={styles.navbarContainer}>
         <div className={styles.navbarContent}>
           <div className={styles.navbarLinks}>
-            <a href="" className={styles.navbarLogo}>
-              {"VAAT"}
+            <a href='' className={styles.navbarLogo}>
+              {'VAAT'}
             </a>
             <div className={styles.navbarLinkGroup}>
-              <a href="" className={styles.navLink}>
-                {"Features"}
+              <a href='' className={styles.navLink}>
+                {'Features'}
               </a>
-              <a href="" className={styles.navLink}>
-                {"Pricing"}
+              <a href='' className={styles.navLink}>
+                {'Pricing'}
               </a>
-              <a href="" className={styles.navLink}>
-                {"Support"}
+              <a href='' className={styles.navLink}>
+                {'Support'}
               </a>
             </div>
           </div>
           <div className={styles.navbarAuthButtons}>
-            <Button variant="ghost" className={styles.btnLogin}>
-              {"Login"}
+            <Button variant='ghost' className={styles.btnLogin}>
+              {'Login'}
             </Button>
-            <Button variant="default" className={styles.btnSignup}>
-              {"Sign Up for free"}
+            <Button variant='default' className={styles.btnSignup}>
+              {'Sign Up for free'}
             </Button>
 
             <div className={styles.mobileMenuButton}>
@@ -53,11 +53,6 @@ export default function Navbar() {
                 <PopoverTrigger
                   onClick={() => setMobileMenuOpen((prev) => !prev)}
                 >
-                  {/* {mobileMenuOpen ? (
-                    <MinusIcon className={styles.mobileMenuIcon} />
-                  ) : (
-                    <MenuIcon className={styles.mobileMenuIcon} />
-                  )} */}
                   {/* <MenuIcon className={styles.mobileMenuIcon} /> */}
                   {/* <MenuIcon />
                   {mobileMenuOpen && (
@@ -78,7 +73,7 @@ export default function Navbar() {
                       <MenuIcon className={styles.mobileMenuIcon} />
                     )}
                   </div> */}
-                  <Button variant="ghost" size="icon">
+                  <Button variant='ghost' size='icon'>
                     <MenuIcon className={styles.mobileMenuIcon} />
                   </Button>
                 </PopoverTrigger>
@@ -86,23 +81,23 @@ export default function Navbar() {
                   visible={mobileMenuOpen}
                   onClose={() => setMobileMenuOpen(false)}
                   className={styles.mobileMenuPopover}
-                  align="top-right"
+                  align='top-right'
                   offset={40}
                 >
                   <PopoverContent className={styles.mobileMenuContent}>
-                    <a href="" className={styles.mobileNavLink}>
+                    <a href='' className={styles.mobileNavLink}>
                       Features
                     </a>
-                    <a href="" className={styles.mobileNavLink}>
+                    <a href='' className={styles.mobileNavLink}>
                       Pricing
                     </a>
-                    <a href="" className={styles.mobileNavLink}>
+                    <a href='' className={styles.mobileNavLink}>
                       Support
                     </a>
-                    <Button variant="outline" className={styles.mobileBtnLogin}>
-                      {"Login"}
+                    <Button variant='outline' className={styles.mobileBtnLogin}>
+                      {'Login'}
                     </Button>
-                    <Button variant="default">{"Sign Up for free"}</Button>
+                    <Button variant='default'>{'Sign Up for free'}</Button>
                   </PopoverContent>
                 </Popover>
               </PopoverRoot>

@@ -10,6 +10,8 @@
   cursor: pointer;
   transition: all 0.25s;
   margin: 0.1rem;
+  word-break: break-all;
+  word-wrap: break-word;
 }
 
 .btn:hover {

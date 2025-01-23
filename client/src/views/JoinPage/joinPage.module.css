@@ -1,3 +1,4 @@
+/* Navbar css */
 .joinpage__navbar {
   width: 100%;
   height: 4.0625rem;
@@ -14,14 +15,165 @@
   margin-left: 1.25rem;
 }
 
+/* Main component css */
 .joinPage__container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
+  width: 100vw;
+  min-width: 100vw;
   background: var(--primary-color);
 }
 
-.joinPage {
+.joinPage__main {
+  display: flex;
+  flex-direction: column;
+  padding: 3rem 2rem;
+  gap: 0rem 0.625rem;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  /* height: 100%; */
+  flex: 1;
+  width: 100vw;
+  min-width: 100vw;
+  background: var(--primary-color);
+}
+
+.joinPage__content {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  padding: 0rem;
+  gap: 2rem;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-color);
+  /* border: 2px solid blue; */
+}
+
+.joinPage__leftSection,
+.joinPage__rightSection {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.joinPage__leftSection {
+  align-items: center;
+  justify-content: flex-start;
+  flex-basis: calc(60% - 1rem);
+  padding: 0rem 2%;
+  gap: 2rem;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  /* border: 2px solid green; */
+}
+
+.joinPage__controls {
+  justify-self: center;
+  position: relative;
+  width: 100%;
+  max-width: 56.75rem;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.joinPage__buttonGroup {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 0rem 0.625rem;
+  width: 100%;
+  flex-wrap: wrap;
+  align-content: center;
+
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.joinPage__buttonWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 0rem;
+  gap: 0rem 1rem;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.joinPage__video {
+  width: 100%;
+  height: auto;
+  background-color: var(--secondary-color);
+}
+
+.joinPage__getMediaButton {
+  width: 50%;
+  min-width: fit-content;
+}
+
+.joinPage__rightSection {
+  flex-basis: calc(40% - 1rem);
+  align-content: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0rem;
+  gap: 0rem;
+  width: 100%;
+  height: 100%;
+  color: var(--primary-font-color);
+  /* border: 2px solid yellow; */
+}
+
+.joinPage__info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
+  margin-top: 25%;
+  padding: 0rem 2rem;
+}
+
+.joinPage__title {
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-bold);
+}
+
+.joinPage__description {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-normal);
+  color: var(--secondary-font-color);
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  /* .joinPage__container {
+    height: auto;
+  } */
+
+  .joinPage__leftSection,
+  .joinPage__rightSection {
+    flex-basis: 100%;
+  }
+
+  .joinPage__content {
+    align-content: baseline;
+    gap: 5rem;
+  }
+
+  .joinPage__info {
+    margin-top: 0;
+  }
 }
