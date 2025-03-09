@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef, ReactNode } from 'react';
-import ReactDOM from 'react-dom';
-import clsx from 'clsx';
-import styles from './Popover.module.css';
-import { cva, type VariantProps } from 'class-variance-authority';
+import React, { useState, useEffect, useRef, ReactNode } from "react";
+import ReactDOM from "react-dom";
+import clsx from "clsx";
+import styles from "./Popover.module.css";
+import { cva, type VariantProps } from "class-variance-authority";
 
 // Create a context to share the trigger ref
 const TriggerContext =
@@ -28,23 +28,23 @@ const popoverVariants = cva(styles.popover, {
   variants: {
     align: {
       top: styles.top,
-      'top-right': styles.topRight,
+      "top-right": styles.topRight,
       right: styles.right,
-      'bottom-right': styles.bottomRight,
+      "bottom-right": styles.bottomRight,
       bottom: styles.bottom,
-      'bottom-left': styles.bottomLeft,
+      "bottom-left": styles.bottomLeft,
       left: styles.left,
-      'top-left': styles.topLeft,
+      "top-left": styles.topLeft,
       center: styles.center,
     },
   },
   defaultVariants: {
-    align: 'center',
+    align: "center",
   },
 });
 
 export type PopoverAlign = NonNullable<
-  VariantProps<typeof popoverVariants>['align']
+  VariantProps<typeof popoverVariants>["align"]
 >;
 
 // Popover component props
@@ -64,7 +64,7 @@ export function Popover({
   onClose,
   className,
   style,
-  align = 'center',
+  align = "center",
   offset = 16,
 }: PopoverProps) {
   const [position, setPosition] = useState({ top: 0, left: 0 });
@@ -84,39 +84,39 @@ export function Popover({
     let left = 0;
 
     switch (align) {
-      case 'top':
+      case "top":
         top = offset;
         left = (windowWidth - popoverWidth) / 2;
         break;
-      case 'top-right':
+      case "top-right":
         top = offset;
         left = windowWidth - popoverWidth - offset;
         break;
-      case 'right':
+      case "right":
         top = (windowHeight - popoverHeight) / 2;
         left = windowWidth - popoverWidth - offset;
         break;
-      case 'bottom-right':
+      case "bottom-right":
         top = windowHeight - popoverHeight - offset;
         left = windowWidth - popoverWidth - offset;
         break;
-      case 'bottom':
+      case "bottom":
         top = windowHeight - popoverHeight - offset;
         left = (windowWidth - popoverWidth) / 2;
         break;
-      case 'bottom-left':
+      case "bottom-left":
         top = windowHeight - popoverHeight - offset;
         left = offset;
         break;
-      case 'left':
+      case "left":
         top = (windowHeight - popoverHeight) / 2;
         left = offset;
         break;
-      case 'top-left':
+      case "top-left":
         top = offset;
         left = offset;
         break;
-      case 'center':
+      case "center":
         top = (windowHeight - popoverHeight) / 2;
         left = (windowWidth - popoverWidth) / 2;
         break;
@@ -155,14 +155,14 @@ export function Popover({
     };
 
     if (visible) {
-      window.addEventListener('resize', handleResize);
+      window.addEventListener("resize", handleResize);
       // Also handle scroll events to keep popover positioned correctly
-      window.addEventListener('scroll', handleResize);
+      window.addEventListener("scroll", handleResize);
     }
 
     return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('scroll', handleResize);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleResize);
     };
   }, [visible, align, offset]);
 
@@ -178,12 +178,12 @@ export function Popover({
     };
 
     if (visible) {
-      document.addEventListener('click', handleClickOutside);
+      document.addEventListener("click", handleClickOutside);
     }
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
-  }, [onClose, visible]);
+  }, [onClose, visible, triggerRef]);
 
   if (!visible) return null;
 
@@ -233,8 +233,8 @@ export function PopoverTrigger({
       ref={triggerRef}
       className={clsx(styles.popoverTrigger, className)}
       onClick={onClick}
-      aria-haspopup='true'
-      aria-expanded='true'
+      aria-haspopup="true"
+      aria-expanded="true"
     >
       {children}
     </div>
@@ -278,8 +278,8 @@ export function PopoverAction({
     <div
       className={clsx(styles.popoverTrigger, className)}
       onClick={onClick}
-      aria-haspopup='true'
-      aria-expanded='true'
+      aria-haspopup="true"
+      aria-expanded="true"
     >
       {children}
     </div>

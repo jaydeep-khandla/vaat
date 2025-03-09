@@ -1,15 +1,14 @@
-import React from "react";
+import { useGlobalContext } from "@/contexts/contextHooks";
 import Button from "../ui/Button";
 import styles from "./heroSection.module.css";
 import assets from "@/assets";
-import { useNavigate } from "react-router";
 
 export default function HeroSection() {
-  const navigateTo = (path: string) => {
-    const navigate = useNavigate();
+  const { navigate } = useGlobalContext();
 
+  function handleNavigation(path: string) {
     navigate(path);
-  };
+  }
 
   return (
     <section className={styles.heroSection}>
@@ -28,7 +27,7 @@ export default function HeroSection() {
               <Button
                 size="lg"
                 className={styles.primaryButton}
-                onClick={() => {}}
+                onClick={() => handleNavigation("/join")}
               >
                 {"Start Your First Meeting"}
               </Button>
