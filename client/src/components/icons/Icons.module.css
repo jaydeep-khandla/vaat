@@ -113,7 +113,7 @@
 
 .minusIcon {
   fill: none;
-  stroke: #000; /* Default color for the stroke */
+  stroke: #000;
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -129,19 +129,119 @@
   transition: color 0.3s ease-in-out;
 }
 
-.micIcon:hover {
-  color: #007bff; /* Change this color to whatever you want for the hover effect */
-}
-
 .micIcon path,
 .micIcon line {
   transition: stroke 0.3s ease-in-out;
 }
 
-.micIcon path:hover {
-  stroke: #007bff; /* Hover color for the path */
+/* --------------------------------------------------------- */
+
+.micOffIcon {
+  width: 24px;
+  height: 24px;
+  stroke: #fff;
+  transition: stroke 0.2s ease;
 }
 
-.micIcon line:hover {
-  stroke: #007bff; /* Hover color for the line */
+.micOffIcon:hover {
+  stroke: #ff0000;
+}
+
+.micOffIcon:active {
+  transform: scale(0.9);
+}
+
+/* --------------------------------------------------------- */
+
+.videoOffIcon {
+  width: 24px;
+  height: 24px;
+  stroke: #fff;
+  transition: stroke 0.2s ease;
+}
+
+.videoOffIcon:hover {
+  stroke: #ff0000;
+}
+
+.videoOffIcon:active {
+  transform: scale(0.9);
+}
+
+/* --------------------------------------------------------- */
+
+.moreHorizontalIcon {
+  width: 24px;
+  height: 24px;
+  stroke: #fff;
+  transition: stroke 0.2s ease;
+}
+
+.moreHorizontalIcon:active {
+  transform: scale(0.9);
+}
+
+/* --------------------------------------------------------- */
+
+.phoneIcon {
+  width: 24px;
+  height: 24px;
+  stroke: #fff;
+  transition: stroke 0.2s ease;
+}
+
+.phoneIcon:active {
+  transform: scale(0.9);
+}
+
+/* --------------------------------------------------------- */
+
+.columns2Icon {
+  width: 24px;
+  height: 24px;
+  stroke: #fff;
+  transition: stroke 0.2s ease;
+}
+
+.columns2Icon:active {
+  transform: scale(0.9);
+}
+
+/* --------------------------------------------------------- */
+
+.maximize2Icon {
+  width: 24px;
+  height: 24px;
+  stroke: #fff; /* default stroke color */
+  transition: stroke 0.2s ease; /* smooth transition for color changes */
+}
+
+.maximize2Icon:active {
+  transform: scale(0.9); /* shrink the icon slightly when clicked */
+}
+
+/* --------------------------------------------------------- */
+
+.gridIcon {
+  width: 24px;
+  height: 24px;
+  stroke: #fff; /* default stroke color */
+  transition: stroke 0.2s ease; /* smooth transition for color changes */
+}
+
+.gridIcon:active {
+  transform: scale(0.9); /* shrink the icon slightly when clicked */
+}
+
+/* --------------------------------------------------------- */
+
+.sendHorizontalIcon {
+  width: 24px;
+  height: 24px;
+  stroke: #fff; /* default stroke color */
+  transition: stroke 0.2s ease; /* smooth transition for color changes */
+}
+
+.sendHorizontalIcon:active {
+  transform: scale(0.9); /* shrink the icon slightly when clicked */
 }

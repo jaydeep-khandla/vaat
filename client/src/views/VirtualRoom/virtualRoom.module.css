@@ -1,0 +1,371 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+.container.withSidebar {
+  padding-right: 20rem;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-width: 0;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.videoGrid {
+  flex: 1;
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  overflow: auto;
+  height: calc(100vh - 72px);
+  max-width: 100%;
+  max-height: calc(100vh - 72px);
+  width: 100%;
+}
+
+/* Layout variations */
+.gridLayout {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 23rem), 1fr));
+}
+
+.spotlightLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.spotlightLayout .participantContainer:first-child {
+  flex: 1;
+  min-height: 0;
+}
+
+.spotlightLayout .otherParticipants {
+  display: flex;
+  gap: 1rem;
+  height: 180px;
+}
+
+.spotlightLayout .otherParticipants .participantContainer {
+  flex: 1;
+  min-width: 0;
+}
+
+.sideBySideLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 300px);
+  gap: 1rem;
+  max-width: 100%;
+  height: calc(100vh - 72px - 2rem);
+  min-height: 0;
+}
+
+.sideBySideLayout .mainVideo {
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.sideBySideLayout .sideContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+  min-width: 0;
+  max-width: 18.75rem;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.sideBySideLayout .sideContent .participantContainer {
+  height: calc((100% - 1rem) / 2);
+  min-height: 12.5rem;
+}
+
+@media (max-width: 1024px) {
+  .container.withSidebar {
+    padding-right: 0;
+  }
+
+  .sidebar {
+    width: 100%;
+    max-width: 19.625rem;
+    position: absolute;
+    z-index: 50;
+    visibility: hidden;
+  }
+
+  .sidebarVisible {
+    visibility: visible;
+  }
+}
+
+@media (max-width: 768px) {
+  /* .container.withSidebar {
+    padding-right: 17.5rem;
+  }
+
+  .sidebar {
+    width: 17.5rem;
+  } */
+
+  .sideBySideLayout {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .sideBySideLayout .sideContent {
+    max-width: 100%;
+  }
+
+  .sideBySideLayout .mainVideo {
+    height: 60vh;
+  }
+
+  .sideBySideLayout .sideContent .participantContainer {
+    height: 12.5rem;
+  }
+}
+
+.participantContainer {
+  position: relative;
+  background-color: #1f2937;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 100%;
+  min-height: 15rem;
+}
+
+.participantVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.participantInfo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.5rem;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.participantName {
+  font-size: 0.875rem;
+}
+
+.audioIndicator {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+}
+
+.audioActive {
+  background-color: #10b981;
+}
+
+.audioMuted {
+  background-color: #ef4444;
+}
+
+.controlBar {
+  height: 72px;
+  background-color: #1f2937;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1rem;
+  position: relative;
+  width: 100%;
+}
+
+.controlButton {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: none;
+  background-color: #374151;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.controlButton:hover {
+  background-color: #4b5563;
+  transform: translateY(-1px);
+}
+
+.controlButton.active {
+  background-color: #0060ac;
+}
+
+.controlButton.danger {
+  background-color: #ef4444;
+}
+
+.controlButton.danger:hover {
+  background-color: #dc2626;
+}
+
+.sidebar {
+  width: 20rem;
+  background-color: #1f2937;
+  border-left: 1px solid #374151;
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+.sidebarVisible {
+  transform: translateX(0);
+}
+
+.tabHeader {
+  display: flex;
+  border-bottom: 1px solid #374151;
+}
+
+.tab {
+  flex: 1;
+  padding: 1rem;
+  text-align: center;
+  color: #9ca3af;
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.tab.active {
+  color: white;
+  border-bottom: 2px solid #0060ac;
+}
+
+.chatContainer {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 48px);
+}
+
+.messageList {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  color: var(--primary-font-color);
+  font-size: var(--font-size-xsmall);
+}
+
+.message {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.messageAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.messageContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.messageHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.messageTime {
+  color: #9ca3af;
+  font-size: 0.75rem;
+}
+
+.messageInput {
+  display: flex;
+  padding: 1rem;
+  gap: 0.5rem;
+  background-color: #374151;
+}
+
+.input {
+  flex: 1;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid #4b5563;
+  background-color: #1f2937;
+  color: white;
+}
+
+.sendButton {
+  padding: 0.75rem;
+  background-color: #0060ac;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+.moreOptionsMenu {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  padding: 0.5rem;
+  min-width: 200px;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  color: white;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.menuItem:hover {
+  background-color: #374151;
+}
+
+.menuItem.active {
+  background-color: #0060ac;
+}

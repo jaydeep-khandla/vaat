@@ -2,8 +2,15 @@ import React from "react";
 import Button from "../ui/Button";
 import styles from "./heroSection.module.css";
 import assets from "@/assets";
+import { useNavigate } from "react-router";
 
 export default function HeroSection() {
+  const navigateTo = (path: string) => {
+    const navigate = useNavigate();
+
+    navigate(path);
+  };
+
   return (
     <section className={styles.heroSection}>
       <div className={styles.container}>
@@ -18,7 +25,11 @@ export default function HeroSection() {
               }
             </p>
             <div className={styles.buttonGroup}>
-              <Button size="lg" className={styles.primaryButton}>
+              <Button
+                size="lg"
+                className={styles.primaryButton}
+                onClick={() => {}}
+              >
                 {"Start Your First Meeting"}
               </Button>
               <Button
