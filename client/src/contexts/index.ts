@@ -1,3 +1,3 @@
-import GlobalContext from "./GlobalContext";
+import GlobalContext from './GlobalContext';
 
 export { GlobalContext };

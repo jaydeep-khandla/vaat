@@ -1,7 +1,7 @@
-import { useGlobalContext } from "@/contexts/contextHooks";
-import Button from "../ui/Button";
-import styles from "./heroSection.module.css";
-import assets from "@/assets";
+import { useGlobalContext } from '@/contexts/contextHooks';
+import Button from '../ui/Button';
+import styles from './HeroSection.module.css';
+import assets from '@/assets';
 
 export default function HeroSection() {
   const { navigate } = useGlobalContext();
@@ -16,27 +16,27 @@ export default function HeroSection() {
         <div className={styles.content}>
           <div className={styles.textContent}>
             <h1 className={styles.heading}>
-              {"VAAT: Effortless Collaboration"}
+              {'VAAT: Effortless Collaboration'}
             </h1>
             <p className={styles.subheading}>
               {
-                "Experience meetings that feel personal, anywhere. Connect with crystal-clear video and audio quality."
+                'Experience meetings that feel personal, anywhere. Connect with crystal-clear video and audio quality.'
               }
             </p>
             <div className={styles.buttonGroup}>
               <Button
                 size="lg"
                 className={styles.primaryButton}
-                onClick={() => handleNavigation("/join")}
+                onClick={() => handleNavigation('/join')}
               >
-                {"Start Your First Meeting"}
+                {'Start Your First Meeting'}
               </Button>
               <Button
                 size="lg"
                 variant="outline"
                 className={styles.secondaryButton}
               >
-                {"Learn More"}
+                {'Learn More'}
               </Button>
             </div>
           </div>

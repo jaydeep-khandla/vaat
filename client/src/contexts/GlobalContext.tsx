@@ -1,9 +1,10 @@
-import React, { createContext, ReactNode } from "react";
-import { NavigateFunction, useNavigate } from "react-router";
+import React, { createContext, ReactNode } from 'react';
+import { NavigateFunction, useNavigate } from 'react-router';
 
 // Define the type for our context state
 interface GlobalContextState {
   navigate: NavigateFunction;
+  navigateTo: (path: string, options?: object) => void;
   // Add other global states as needed
 }
 
@@ -16,8 +17,13 @@ export const GlobalProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const navigate = useNavigate();
 
+  function navigateTo(path: string, options: object = {}): void {
+    navigate(path, options);
+  }
+
   const contextValue: GlobalContextState = {
     navigate,
+    navigateTo,
   };
 
   return (

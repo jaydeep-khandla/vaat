@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from 'axios';
 
 const BASE_URL = import.meta.env.BASE_URL;
 
@@ -19,7 +19,7 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(function accessTokenInterceptor(config) {
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = localStorage.getItem('accessToken');
 
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
@@ -32,7 +32,7 @@ axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => response.data,
   function errorHandlingInterceptor(error: AxiosError) {
     if (axios.isCancel(error)) {
-      console.error("Request canceled:", error.message);
+      console.error('Request canceled:', error.message);
       return Promise.reject(null); // Treat canceled requests differently if needed
     }
 
@@ -48,7 +48,7 @@ axiosInstance.interceptors.response.use(
       return Promise.reject({ error: true, message });
     }
 
-    console.error("Error making request:", error);
+    console.error('Error making request:', error);
     return Promise.reject(error);
   }
 );
@@ -57,8 +57,8 @@ let controller: AbortController;
 let previousEndpoint: string;
 
 export const axiosRequest = async ({
-  method = "GET",
-  endpoint = "",
+  method = 'GET',
+  endpoint = '',
   headers = {},
   body = {},
   query = {},

@@ -1,6 +1,6 @@
-import debug from "debug";
+import debug from 'debug';
 
-const APP_NAME = "mediasoup-server";
+const APP_NAME = 'mediasoup-server';
 
 debug.enable(`${APP_NAME}--*`);
 

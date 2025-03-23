@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./Icons.module.css";
+import React from 'react';
+import styles from './Icons.module.css';
 
 export function TwitterIcon(props: React.SVGProps<SVGSVGElement>) {
   return (

@@ -14,6 +14,14 @@ import {
   GridIcon,
   SendHorizontalIcon,
 } from './ToolIcons';
+import {
+  MailIcon,
+  KeyIcon,
+  EyeIcon,
+  EyeOffIcon,
+  GoogleIcon,
+  MicroSoftIcon,
+} from './InputIcons';
 
 export {
   TwitterIcon,
@@ -34,4 +42,10 @@ export {
   Maximize2Icon,
   GridIcon,
   SendHorizontalIcon,
+  MailIcon,
+  KeyIcon,
+  EyeIcon,
+  EyeOffIcon,
+  GoogleIcon,
+  MicroSoftIcon,
 };

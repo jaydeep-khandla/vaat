@@ -1,4 +1,4 @@
-import { Server, Socket } from "socket.io";
+import { Server, Socket } from 'socket.io';
 import {
   ActiveSpeakerObserver,
   AudioLevelObserver,
@@ -11,10 +11,10 @@ import {
   WebRtcTransport,
   // WebRtcTransport,
   Worker,
-} from "mediasoup/node/lib/types";
-import { Peer } from "socket";
-import Room from "../lib/room";
-import { TransportObj } from "../types/mediasoup";
+} from 'mediasoup/node/lib/types';
+import { Peer } from 'socket';
+import Room from '../lib/room';
+import { TransportObj } from '../types/mediasoup';
 
 declare global {
   var rooms: Map<string, Room>;

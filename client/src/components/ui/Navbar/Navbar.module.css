@@ -70,7 +70,7 @@
 }
 
 .navLink:hover {
-  /* color: var(--pallete-color-1); */
+  /* color: var(--palette-color-1); */
   transform: scale(1.05);
 }
 

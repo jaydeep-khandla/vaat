@@ -39,24 +39,24 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   size?: 'icon' | 'sm' | 'md' | 'lg';
 };
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, children, ...props }: ButtonProps, ref) => {
-    const variantClassName = buttonVarients({ variant, size });
+function Button(
+  { className, variant, size, children, ...props }: ButtonProps,
+  ref: React.ForwardedRef<HTMLButtonElement>
+) {
+  const variantClassName = buttonVarients({ variant, size });
+  const combinedClassName = clsx(variantClassName, className);
 
-    const combinedClassName = clsx(variantClassName, className);
+  const renderedChildren = React.Children.map(children, function (child) {
+    return React.isValidElement(child)
+      ? React.cloneElement(child, { ...props })
+      : child;
+  });
 
-    const renderedChildren = React.Children.map(children, (child) =>
-      React.isValidElement(child)
-        ? React.cloneElement(child, { ...props })
-        : child
-    );
+  return (
+    <button className={combinedClassName} ref={ref} {...props}>
+      {renderedChildren}
+    </button>
+  );
+}
 
-    return (
-      <button className={combinedClassName} ref={ref} {...props}>
-        {renderedChildren}
-      </button>
-    );
-  }
-);
-
-export default Button;
+export default React.forwardRef<HTMLButtonElement, ButtonProps>(Button);

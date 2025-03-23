@@ -1,15 +1,15 @@
-import { mediasoupConfig } from "../config";
-import Logger from "../utils/logger";
+import { mediasoupConfig } from '../config';
+import Logger from '../utils/logger';
 import {
   Router,
   RtpObserver,
   WebRtcServer,
   WebRtcTransportOptions,
   Worker,
-} from "mediasoup/node/lib/types";
-import { Socket } from "socket.io";
+} from 'mediasoup/node/lib/types';
+import { Socket } from 'socket.io';
 
-const logger = new Logger("room");
+const logger = new Logger('room');
 
 const rooms = new Map<string, Room>();
 
@@ -127,7 +127,7 @@ class Room {
     const peer = this._peers.get(socket.id);
 
     if (!peer) {
-      logger.error("Peer not found [socketId:%s]", socket.id);
+      logger.error('Peer not found [socketId:%s]', socket.id);
       return;
     }
 

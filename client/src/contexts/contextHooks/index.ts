@@ -1,3 +1,3 @@
-import useGlobalContext from "./useGlobalContext";
+import useGlobalContext from './useGlobalContext';
 
 export { useGlobalContext };

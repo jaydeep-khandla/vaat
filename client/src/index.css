@@ -36,7 +36,8 @@ body {
   --success-color: #00ff00;
   --primary-color: #0f1826;
   --secondary-color: #1f2937; /* #1d2936; */
-  --pallete-color-1: #0060ac;
+  --input-bg-color: #374151;
+  --palette-color-1: #0060ac;
 
   /* RGB Values */
   --primary-font-color-rgb: 255, 255, 255;
@@ -46,7 +47,8 @@ body {
   --success-color-rgb: 0, 255, 0;
   --primary-color-rgb: 15, 24, 38;
   --secondary-color-rgb: 31, 41, 55; /* 29, 41, 54; */
-  --pallete-color-1-rgb: 0, 96, 172;
+  --input-bg-color-rgb: 55, 65, 81;
+  --palette-color-1-rgb: 0, 96, 172;
 
   /* Font Sizes */
   --font-size-huge: 3rem;
@@ -73,7 +75,7 @@ body {
   --border-radius: 0.5rem;
 
   /* Animations */
-  --animatin-fadeIn: fadeIn ease-in-out;
+  --animation-fadeIn: fadeIn ease-in-out;
   --animation-slideDown: slideDown ease-in-out;
   --animation-slideUp: slideUp ease-in-out;
   --animation-slideFromLeft: slideFromLeft ease-in-out;

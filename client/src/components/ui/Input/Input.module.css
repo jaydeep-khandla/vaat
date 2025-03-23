@@ -1,0 +1,219 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /* margin-bottom: 1rem; */
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.375rem;
+  color: var(--primary-font-color);
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  font-size: 1rem;
+  color: var(--primary-font-color);
+  transition: all 0.2s ease-in-out;
+}
+
+/* File input type styling */
+.input[type='file'] {
+  cursor: pointer;
+  color: var(--secondary-font-color);
+}
+
+.input[type='file']::file-selector-button {
+  padding: 0.375rem 0.75rem;
+  margin-right: 0.75rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--secondary-font-color);
+  background-color: var(--input-bg-color);
+  color: var(--primary-font-color);
+  font-size: 0.875rem;
+  transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.input[type='file']::file-selector-button:hover {
+  background-color: var(--secondary-font-color);
+  color: var(--secondary-color);
+}
+/* Checkbox input type styling */
+.input[type='checkbox'] {
+  cursor: pointer;
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid var(--secondary-font-color);
+  border-radius: 0.25rem;
+  background-color: var(--input-bg-color);
+  padding: 0;
+  margin: 0;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+}
+
+.input[type='checkbox']:checked {
+  background-color: var(--palette-color-1);
+  border-color: var(--palette-color-1);
+}
+
+.input[type='checkbox']:checked::after {
+  content: '';
+  position: absolute;
+  left: 0.3rem;
+  top: 0.1rem;
+  width: 0.3rem;
+  height: 0.5rem;
+  border: solid var(--secondary-font-color);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.input[type='checkbox']:focus {
+  outline: none;
+  border-color: var(--palette-color-1);
+}
+/* Variants */
+.default {
+  border: 1px solid var(--secondary-font-color);
+  border-radius: 0.375rem;
+  background-color: var(--input-bg-color);
+  padding: 0.5rem 0.75rem;
+}
+
+.outline {
+  border: 2px solid var(--secondary-font-color);
+  border-radius: 0.375rem;
+  background-color: transparent;
+  padding: 0.5rem 0.75rem;
+}
+
+.filled {
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  background-color: var(--input-bg-color);
+  padding: 0.5rem 0.75rem;
+}
+
+.underlined {
+  border: none;
+  border-bottom: 2px solid var(--secondary-font-color);
+  border-radius: 0;
+  background-color: transparent;
+  padding: 0.5rem 0.25rem;
+}
+
+/* Sizes */
+.sm {
+  font-size: 0.875rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+}
+
+.md {
+  font-size: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.lg {
+  font-size: 1.125rem;
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+
+/* States */
+.error {
+  border-color: var(--destructive-color);
+}
+
+.success {
+  border-color: var(--success-color);
+}
+
+.warning {
+  border-color: var(--warning-color);
+}
+
+.helperText {
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  color: var(--secondary-font-color);
+}
+
+.helperText.error {
+  color: var(--destructive-color);
+}
+
+.helperText.success {
+  color: var(--success-color);
+}
+
+.helperText.warning {
+  color: var(--warning-color);
+}
+
+.leftIcon,
+.rightIcon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--secondary-font-color);
+  pointer-events: none;
+}
+
+.leftIcon {
+  left: 0.75rem;
+}
+
+.rightIcon {
+  right: 0.75rem;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--palette-color-1);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Adjust padding when icons are present */
+.leftIcon + .input {
+  padding-left: 2.5rem;
+}
+
+.input + .rightIcon ~ .input {
+  padding-right: 2.5rem;
+}
+/* Animation styles */
+.label {
+  animation: var(--animation-slideDown) 0.8s forwards;
+}
+
+.leftIcon {
+  animation: var(--animation-slideFromLeft) 0.6s forwards;
+}
+
+.rightIcon {
+  animation: var(--animation-slideFromRight) 0.6s forwards;
+}
+
+.helperText {
+  animation: var(--animation-fadeIn) 0.5s forwards;
+}
+
+/* Adjust the container to prevent layout shifts during animations */
+.container {
+  overflow: hidden;
+}

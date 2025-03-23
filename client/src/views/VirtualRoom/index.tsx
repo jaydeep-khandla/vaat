@@ -13,7 +13,7 @@ import {
   Columns2Icon,
   PhoneIcon,
 } from '@/components/icons';
-import styles from './virtualRoom.module.css';
+import styles from './VirtualRoom.module.css';
 import Button from '@/components/ui/Button';
 
 type Layout = 'grid' | 'spotlight' | 'sideBySide';
@@ -162,7 +162,7 @@ export default function VirtualRoom() {
 
         <div className={styles.controlBar}>
           <Button
-            size='icon'
+            size="icon"
             className={`${styles.controlButton} ${
               audioEnabled ? styles.active : ''
             }`}
@@ -175,7 +175,7 @@ export default function VirtualRoom() {
             )}
           </Button>
           <Button
-            size='icon'
+            size="icon"
             className={`${styles.controlButton} ${
               videoEnabled ? styles.active : ''
             }`}
@@ -187,11 +187,11 @@ export default function VirtualRoom() {
               <VideoOffIcon height={20} width={20} />
             )}
           </Button>
-          <Button size='icon' className={styles.controlButton}>
+          <Button size="icon" className={styles.controlButton}>
             <MonitorIcon height={20} width={20} />
           </Button>
           <Button
-            size='icon'
+            size="icon"
             className={`${styles.controlButton} ${
               sidebarVisible ? styles.active : ''
             }`}
@@ -200,7 +200,7 @@ export default function VirtualRoom() {
             <MessagesSquareIcon height={20} width={20} />
           </Button>
           <Button
-            size='icon'
+            size="icon"
             className={`${styles.controlButton} ${
               showMoreOptions ? styles.active : ''
             }`}
@@ -209,7 +209,7 @@ export default function VirtualRoom() {
             <MoreHorizontalIcon height={20} width={20} />
           </Button>
           <Button
-            size='icon'
+            size="icon"
             className={`${styles.controlButton} ${styles.danger}`}
             onClick={handleLeaveMeeting}
           >
@@ -266,7 +266,7 @@ function Sidebar({ sidebarVisible }: { sidebarVisible: boolean }) {
     >
       <div className={styles.tabHeader}>
         <Button
-          size='icon'
+          size="icon"
           className={`${styles.tab} ${
             activeTab === 'chat' ? styles.active : ''
           }`}
@@ -275,7 +275,7 @@ function Sidebar({ sidebarVisible }: { sidebarVisible: boolean }) {
           Chat
         </Button>
         <Button
-          size='icon'
+          size="icon"
           className={`${styles.tab} ${
             activeTab === 'participants' ? styles.active : ''
           }`}
@@ -307,9 +307,9 @@ function Sidebar({ sidebarVisible }: { sidebarVisible: boolean }) {
           </div>
           <div className={styles.messageInput}>
             <input
-              type='text'
+              type="text"
               className={styles.input}
-              placeholder='Type a message...'
+              placeholder="Type a message..."
               value={messageInput}
               onChange={(e) => setMessageInput(e.target.value)}
             />

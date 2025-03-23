@@ -212,12 +212,12 @@
 .maximize2Icon {
   width: 24px;
   height: 24px;
-  stroke: #fff; /* default stroke color */
-  transition: stroke 0.2s ease; /* smooth transition for color changes */
+  stroke: #fff;
+  transition: stroke 0.2s ease;
 }
 
 .maximize2Icon:active {
-  transform: scale(0.9); /* shrink the icon slightly when clicked */
+  transform: scale(0.9);
 }
 
 /* --------------------------------------------------------- */
@@ -225,12 +225,12 @@
 .gridIcon {
   width: 24px;
   height: 24px;
-  stroke: #fff; /* default stroke color */
-  transition: stroke 0.2s ease; /* smooth transition for color changes */
+  stroke: #fff;
+  transition: stroke 0.2s ease;
 }
 
 .gridIcon:active {
-  transform: scale(0.9); /* shrink the icon slightly when clicked */
+  transform: scale(0.9);
 }
 
 /* --------------------------------------------------------- */
@@ -238,10 +238,66 @@
 .sendHorizontalIcon {
   width: 24px;
   height: 24px;
-  stroke: #fff; /* default stroke color */
-  transition: stroke 0.2s ease; /* smooth transition for color changes */
+  stroke: #fff;
+  transition: stroke 0.2s ease;
 }
 
 .sendHorizontalIcon:active {
-  transform: scale(0.9); /* shrink the icon slightly when clicked */
+  transform: scale(0.9);
 }
+
+/* --------------------------------------------------------- */
+
+.mailIcon {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  transition: stroke 0.2s ease;
+}
+
+/* --------------------------------------------------------- */
+
+.keyIcon {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  transition: stroke 0.2s ease;
+}
+
+/* --------------------------------------------------------- */
+
+.eyeIcon {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  transition: stroke 0.2s ease;
+}
+
+/* --------------------------------------------------------- */
+
+.eyeOffIcon {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  transition: stroke 0.2s ease;
+}
+
+/* --------------------------------------------------------- */
+
+.googleIcon {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  transition: stroke 0.2s ease;
+}
+
+/* --------------------------------------------------------- */
+
+.microSoftIcon {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  transition: stroke 0.2s ease;
+}
+
+/* --------------------------------------------------------- */
