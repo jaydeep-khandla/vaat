@@ -31,6 +31,25 @@ declare global {
   var dataProducers: Map<string, DataProducer[]>;
   var dataConsumers: Map<string, DataConsumer[]>;
   var worker: Worker;
+
+  namespace Express {
+    interface Response {
+      /**
+       * Sends a standardized API response
+       * @param success Indicates if the request was successful
+       * @param message The message to include in the response
+       * @param status The HTTP status code to set for the response
+       * @param data Optional data to include in the response
+       * @returns The response object for chaining
+       */
+      sendResponse: (
+        success: boolean,
+        message: string,
+        status: number,
+        data?: any
+      ) => Express.Response;
+    }
+  }
 }
 
 export {};

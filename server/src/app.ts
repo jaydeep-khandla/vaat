@@ -1,24 +1,25 @@
-// import "./types/global";
 import express from 'express';
-const app = express();
+import http from 'http';
+import { Server } from 'socket.io';
 
 import './workers/mediasoup';
 import Logger from './utils/logger';
+import { socketConfig } from './config';
+import { responseEnhancer } from './middlewares/responseHandler';
+
+const app = express();
 
 const logger = new Logger('app');
 
-import http from 'http';
-
 const httpServer = http.createServer(app);
-
-import { Server } from 'socket.io';
-import { socketConfig } from './config';
 
 const io = new Server(httpServer, { cors: socketConfig.cors });
 global.io = io;
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+app.use(responseEnhancer);
+
+app.get('/', (_req, res) => {
+  res.sendResponse(true, 'Ahh...! We got You...', 200, null);
 });
 
 export default httpServer;
