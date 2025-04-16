@@ -1,24 +1,23 @@
-import {
-  AudioLevelObserver,
-  Router,
-  WebRtcServer,
-  WebRtcTransportOptions,
-} from 'mediasoup/node/lib/types';
+import { Router, WebRtcTransportOptions } from 'mediasoup/node/lib/types';
 import Logger from '../utils/logger';
 import { Namespace, Socket } from 'socket.io';
 import { mediasoupConfig } from '../config';
-import { JoinRoomAckCallback, Peer, TransportAckCallback } from 'socket';
+import {
+  JoinRoomAckCallback,
+  Peer,
+  TransportAckCallback,
+} from '../types/socket';
 import Room from './room';
-import socket from '../config/socket';
 
 const logger = new Logger('socket-events');
 
-const peers = new Map<string, Peer>();
-const meetings = new Map<string, string>();
+// Initialize global maps if not already initialized
+if (!global.rooms) global.rooms = new Map<string, Room>();
+if (!global.peers) global.peers = new Map<string, Peer>();
+if (!global.meetings) global.meetings = new Map<string, string>();
+if (!global.routers) global.routers = new Map<string, Router>();
 
-// Set global variables
-global.peers = peers;
-global.meetings = meetings;
+const { rooms, peers, routers, worker } = global;
 
 class SocketEvents {
   private meetingNamespace: Namespace;
@@ -67,45 +66,50 @@ class SocketEvents {
     meetingId: string,
     callback: JoinRoomAckCallback
   ): Promise<void> {
-    logger.info('Joining room [roomId:%s]', meetingId);
+    try {
+      logger.info('Joining room [roomId:%s]', meetingId);
 
-    const existingRoom = rooms.get(meetingId);
+      const existingRoom = rooms.get(meetingId);
+      let room: Room;
 
-    if (!existingRoom) {
-      logger.info('Room not found [roomId:%s]', meetingId);
-      const room = await Room.create(meetingId, this.socket);
+      if (!existingRoom) {
+        logger.info('Room not found [roomId:%s]', meetingId);
+        room = await Room.create(meetingId, this.socket);
+        logger.info('New Room created [roomId:%s]', meetingId);
+        rooms.set(meetingId, room);
+      } else {
+        room = existingRoom;
+      }
 
-      logger.info('New Room created [roomId:%s]', meetingId);
+      if (!room?.mediasoupRouter) {
+        throw new Error('Router not initialized');
+      }
 
-      rooms.set(meetingId, room);
-    }
-
-    const room = rooms.get(meetingId);
-
-    if (room) {
       const userExists = room.peers.get(this.socket.id);
 
-      if (!userExists) {
-        // Add the user socket to the sockets array
+      if (!userExists && room.host) {
         this.meetingNamespace.to(room.host.id).emit('request-join-permission', {
           socketId: this.socket.id,
           meetingId,
         });
       }
+
+      callback(room.mediasoupRouter.rtpCapabilities);
+    } catch (error) {
+      logger.error('Error in handleJoinRoom:', error);
+      callback(null);
     }
-
-    const rtpCapabilities: any = room.mediasoupRouter.rtpCapabilities;
-
-    callback(rtpCapabilities);
   }
 
   // Handle accepted-join-permission event
   private handleAcceptedJoinPermission(meetingId: string) {
     const room = rooms.get(meetingId);
+    if (!room || !room.mediasoupRouter) return;
 
     this.socket.join(meetingId);
     room.peers.set(this.socket.id, this.socket);
-    peers.set(this.socket.id, {
+
+    const peer: Peer = {
       id: this.socket.id,
       socketId: this.socket.id,
       meetingId,
@@ -113,12 +117,14 @@ class SocketEvents {
       transports: [],
       producers: [],
       consumers: [],
-    });
+    };
 
-    // Notify other users that a new user has connected
-    this.socket
-      .to(meetingId)
-      .emit('user-joined', { socketId: this.socket.id, meetingId });
+    peers.set(this.socket.id, peer);
+
+    this.socket.to(meetingId).emit('user-joined', {
+      socketId: this.socket.id,
+      meetingId,
+    });
   }
 
   // Handle rejected-join-permission event
@@ -131,14 +137,14 @@ class SocketEvents {
     isConsumer: boolean,
     callback: TransportAckCallback
   ) {
-    const peer: Peer = peers.get(this.socket.id);
+    const peer = peers.get(this.socket.id);
 
     if (!peer) {
       logger.error('Peer not found [socketId:%s]', this.socket.id);
       return;
     }
 
-    const router: Router = routers.get(peer.routerId);
+    const router = routers.get(peer.routerId);
 
     if (!router) {
       logger.error('Router not found [roomId:%s]', peer.meetingId);
@@ -161,7 +167,7 @@ class SocketEvents {
       peer.producers.push(webRtcTransport.id);
     }
 
-    peers.get(this.socket.id).transports.push(webRtcTransport.id);
+    peer.transports.push(webRtcTransport.id);
 
     const params = {
       id: webRtcTransport.id,

@@ -11,6 +11,7 @@ import {
   Router,
   RtpObserver,
   RtpObserverType,
+  Transport,
   WebRtcServer,
   WebRtcTransport,
   Worker,
@@ -98,8 +99,8 @@ async function routerEvents(router: Router) {
     routers.delete(router.id);
 
     // Close audioLevelObserver and activeSpeakerObserver
-    global.audioLevelObservers.get(router.id).close();
-    global.activeSpeakerObservers.get(router.id).close();
+    audioLevelObservers.get(router.id)?.close();
+    activeSpeakerObservers.get(router.id)?.close();
   });
 
   router.observer.on('newtransport', transportEvents); // Event function for new [Transport]
@@ -113,37 +114,37 @@ async function rtpObserverEvents(routerId: string, rtpObserver: RtpObserver) {
   );
 
   if (rtpObserver.type === ('audioLevel' as RtpObserverType)) {
-    global.audioLevelObservers.set(routerId, rtpObserver as AudioLevelObserver);
+    audioLevelObservers.set(routerId, rtpObserver as AudioLevelObserver);
   }
 
   if (rtpObserver.type === ('activeSpeaker' as RtpObserverType)) {
-    global.activeSpeakerObservers.set(
-      routerId,
-      rtpObserver as ActiveSpeakerObserver
-    );
+    activeSpeakerObservers.set(routerId, rtpObserver as ActiveSpeakerObserver);
   }
 
   rtpObserver.observer.on('close', function onRtpObserverClose() {
     logger.error('RtpObserver closed [rtpObserverId:%s]', rtpObserver.id);
 
     if (rtpObserver.type === ('audioLevel' as RtpObserverType)) {
-      global.audioLevelObservers.delete(routerId);
+      audioLevelObservers.delete(routerId);
     }
 
     if (rtpObserver.type === ('activeSpeaker' as RtpObserverType)) {
-      global.activeSpeakerObservers.delete(routerId);
+      activeSpeakerObservers.delete(routerId);
     }
   });
 }
 
-function transportEvents(transport: WebRtcTransport) {
+function transportEvents(transport: Transport) {
   logger.info('New transport created [transportId:%s]', transport.id);
 
-  transports.set(transport.id, transport);
+  if (transport.constructor.name === 'WebRtcTransport') {
+    const webRtcTransport = transport as WebRtcTransport;
+    transports.set(transport.id, webRtcTransport);
 
-  transport.on('dtlsstatechange', (state: DtlsState) =>
-    dtlsStateChnageEvent(state, transport)
-  ); // Event function for dtls state change
+    webRtcTransport.on('dtlsstatechange', (state: DtlsState) =>
+      dtlsStateChnageEvent(state, webRtcTransport)
+    ); // Event function for dtls state change
+  }
 
   transport.observer.on('newproducer', producerEvents); // Event function for new [Producer]
   transport.observer.on('newconsumer', consumerEvents); // Event function for new [Consumer]
