@@ -1,0 +1,5 @@
+export const PROVIDER_TYPES = {
+  LOCAL: 'LOCAL',
+  GOOGLE: 'GOOGLE',
+  MICROSOFT: 'MICROSOFT',
+};
