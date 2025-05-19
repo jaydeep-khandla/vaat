@@ -13,7 +13,7 @@ async function initializeWorker() {
   return worker;
 }
 
-initializeWorker().catch((error) => {
+initializeWorker().catch(function initWorkerErrCb(error) {
   logger.error('Failed to initialize worker: ', error);
 });
 

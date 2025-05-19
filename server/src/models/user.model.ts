@@ -1,7 +1,7 @@
 import { Document } from 'mongoose';
 import { PROVIDER_TYPES } from '../config/constants';
 
-export interface IUser extends Document {
+export default interface IUser extends Document {
   email: string;
   username: string;
   password?: string;

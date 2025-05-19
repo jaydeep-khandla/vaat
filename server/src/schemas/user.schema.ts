@@ -1,4 +1,5 @@
 import mongoose, { Document, Schema, Model } from 'mongoose';
+import { PROVIDER_TYPES, ROLES } from '../config/constants';
 import { IUser } from '../models';
 
 const UserSchema: Schema<IUser> = new Schema<IUser>(
@@ -18,24 +19,25 @@ const UserSchema: Schema<IUser> = new Schema<IUser>(
     password: {
       type: String,
       required: function (this: IUser) {
-        return this.provider === 'local';
+        return this.provider === PROVIDER_TYPES.LOCAL;
       },
+      default: null,
     },
     provider: {
       type: String,
-      enum: ['local', 'google', 'microsoft'],
-      default: 'local',
+      enum: Object.values(PROVIDER_TYPES),
+      default: PROVIDER_TYPES.LOCAL,
       required: true,
     },
     providerId: {
       type: String,
       required: function (this: IUser) {
-        return this.provider !== 'local';
+        return this.provider !== PROVIDER_TYPES.LOCAL;
       },
     },
     roles: {
       type: [String],
-      default: ['user'],
+      default: [ROLES.USER],
     },
     isActive: {
       type: Boolean,

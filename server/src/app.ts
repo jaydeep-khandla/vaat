@@ -12,6 +12,9 @@ import { responseEnhancer } from './middlewares/responseHandler';
 
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 const logger = new Logger('app');
 
 const httpServer = http.createServer(app);
@@ -21,8 +24,9 @@ global.io = io;
 
 app.use(responseEnhancer);
 
-app.get('/', (_req, res) => {
-  res.sendResponse(true, 'Ahh...! We got You...', 200, null);
-});
+// Import routes after app is defined
+import './routes';
 
+// Export app for use in routes
+export { app };
 export default httpServer;

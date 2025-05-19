@@ -18,13 +18,32 @@ export class CreateUserDto {
 }
 
 export class UserResponseDto {
-  userId: string;
   email: string;
   username: string;
+  provider: string;
+  roles: string[];
+  isActive: boolean;
+  isDeleted: boolean;
+  lastLogin: Date | null;
+  createdAt: Date;
 
-  constructor(data: { userId: string; email: string; username: string }) {
-    this.userId = data.userId;
+  constructor(data: {
+    email: string;
+    username: string;
+    provider: string;
+    roles: string[];
+    isActive: boolean;
+    isDeleted: boolean;
+    lastLogin: Date | null;
+    createdAt: Date;
+  }) {
     this.email = data.email;
     this.username = data.username;
+    this.provider = data.provider;
+    this.roles = data.roles;
+    this.isActive = data.isActive;
+    this.isDeleted = data.isDeleted;
+    this.lastLogin = data.lastLogin;
+    this.createdAt = data.createdAt;
   }
 }

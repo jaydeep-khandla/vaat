@@ -1,3 +1,2 @@
-import { IUser } from './user.model';
-
-export { IUser };
+export { default as IUser } from './user.model';
+export { default as IToken } from './token.model';

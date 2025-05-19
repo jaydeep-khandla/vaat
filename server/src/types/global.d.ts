@@ -33,6 +33,27 @@ declare global {
   var worker: Worker;
 
   namespace Express {
+    interface Request {
+      /**
+       * @param {string} userId
+       * @description The user ID extracted from the JWT token
+       * @type {string}
+       * @optional
+       * @description This field is populated by the auth middleware
+       * @example "1234567890"
+       *
+       * @param {string[]} roles
+       * @description The roles assigned to the user
+       * @type {string[]}
+       * @optional
+       * @description This field is populated by the auth middleware
+       * @example ["admin", "user"]
+       *
+       */
+      userId?: string;
+      roles?: string[];
+    }
+
     interface Response {
       /**
        * Sends a standardized API response

@@ -2,11 +2,11 @@
 import { Response, Request, NextFunction, RequestHandler } from 'express';
 import { sendResponse } from '../utils/response';
 
-export const responseEnhancer: RequestHandler = (
+export function responseEnhancer(
   _req: Request,
   res: Response,
   next: NextFunction
-) => {
+): void {
   res.sendResponse = sendResponse.bind(res);
   next();
-};
+}
